@@ -1,0 +1,15 @@
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.csprojAssemblyReference.cache
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.Form1.resources
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.Properties.Resources.resources
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.csproj.GenerateResource.cache
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.csproj.CoreCompileInputs.cache
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\FinalHotelReservation.exe.config
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\FinalHotelReservation.exe
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\FinalHotelReservation.pdb
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.exe
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.pdb
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\EntityFramework.dll
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\EntityFramework.xml
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.csproj.CopyComplete
