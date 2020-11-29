@@ -30,7 +30,8 @@ namespace FinalHotelReservation
             }
             else if (MenuNavigate.SelectedTab.Text == "New Booking")
             {
-                MessageBox.Show("new booking");
+                InitializeRoomDataGridView();
+                //query db for available rooms
             }
         }
 
@@ -54,6 +55,7 @@ namespace FinalHotelReservation
 
         private void AddNewGuestBtn_Click(object sender, EventArgs e)
         {
+            //var con = DatabaseInterface.OpenDB();
             Entity.Guest dbGuest = null;
             //search for existing email/phone number
             //if (dbGuest == null)
@@ -96,15 +98,15 @@ namespace FinalHotelReservation
                 newGuestFirstName.Text = newGuestLastName.Text = newGuestTelephone.Text = newGuestEmail.Text = newGuestAddress.Text = newGuestCity.Text = newGuestCountry.Text = "";
             }
 
-            Error:
+        Error:
             MessageBox.Show("Failed to Add");
 
-            
+            //con.Close();
         }
 
         private void InitializeDataGridView()
         {
-      
+            
                 // Set up the DataGridView.
                 AllGuestsDataView.Dock = DockStyle.Fill;
 
@@ -124,10 +126,34 @@ namespace FinalHotelReservation
 
                 // Put the cells in edit mode when user enters them.
                 AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
-
-
         }
 
+        private void InitializeRoomDataGridView()
+        {
+          
+            // Set up the DataGridView.
+            availableRoomsDataGridView.Dock = DockStyle.Fill;
+
+            // Automatically generate the DataGridView columns.
+            availableRoomsDataGridView.AutoGenerateColumns = true;
+
+            var locations = dbContext.Locations;
+
+            // Set up the data source.
+            roomBindingSource.DataSource = dbContext.Rooms.Where(x => x.BookingId == null).ToList(); // available rooms
+                
+            availableRoomsDataGridView.DataSource = roomBindingSource;
+
+            // Automatically resize the visible rows.
+            availableRoomsDataGridView.AutoSizeRowsMode =
+                DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+
+            // Set the DataGridView control's border.
+            availableRoomsDataGridView.BorderStyle = BorderStyle.Fixed3D;
+
+            // Put the cells in edit mode when user enters them.
+            availableRoomsDataGridView.EditMode = DataGridViewEditMode.EditOnEnter;
+        }
 
         private void bindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
@@ -154,6 +180,15 @@ namespace FinalHotelReservation
             {
                 AllGuestsDataView.Rows.RemoveAt(row.Index);
             }
+
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
 
@@ -162,8 +197,25 @@ namespace FinalHotelReservation
             string guestEmail = emailTextBox.Text;
             string guestPhone = phoneNumberTextBox.Text;
 
-            Entity.Guest dbGuest = dbContext.Guests.Where(x => x.Email == guestEmail && x.PhoneNumber == guestPhone).FirstOrDefault();
-            MessageBox.Show(dbGuest.FirstName);
+            var dbGuest = dbContext.Guests.Where(x => x.Email == guestEmail && x.PhoneNumber == guestPhone).ToList();
+
+
+            GuestSearchResults.DataSource = dbGuest;
+            GuestSearchResults.DisplayMember = "FirstName";
+
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void createBookingBtn_Click(object sender, EventArgs e)
+        {
+            var selectedRooms = availableRoomsDataGridView.SelectedRows;
+            var selectedGuest = GuestSearchResults.SelectedItem;
+            MessageBox.Show(selectedGuest.ToString() + selectedRooms.ToString());
         }
     }
 }
