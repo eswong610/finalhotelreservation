@@ -204,7 +204,7 @@ namespace FinalHotelReservation
 
         private void GuestSearchBtn_Click(object sender, EventArgs e)
         {
-            string guestEmail = emailTextBox.Text;
+            string guestEmail = firstNameTextBox.Text;
             string guestPhone = phoneNumberTextBox.Text;
 
             Entity.Guest dbGuest = dbContext.Guests.Where(x => x.Email == guestEmail && x.PhoneNumber == guestPhone).FirstOrDefault();
@@ -251,6 +251,23 @@ namespace FinalHotelReservation
         {
             Console.WriteLine(row);
             SelectedRoomOnBooking.Text = AvailableRoomsGridView.SelectedCells[1].Value.ToString();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkInBtn_Click(object sender, EventArgs e)
+        {
+            //update with selected item booking id
+            DB.UpdateBooking(9, "CheckIn");
+        }
+
+        private void checkOutBtn_Click(object sender, EventArgs e)
+        {
+            //update with selected item booking id
+            DB.UpdateBooking(9, "CheckOut");
         }
     }
 }

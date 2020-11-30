@@ -63,7 +63,7 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY,promo_code VARCHAR(255) NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date,FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id))";
+                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date,FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id), is_checkedin bit, is_checkout bit)";
                 cmd.ExecuteNonQuery();
 
                 //users
@@ -339,6 +339,41 @@ namespace FinalHotelReservation
             {
                 con.Close();
             }
+        }
+
+        public static DataTable UpdateBooking (int bookingId, string updateValue)
+        {
+            var con = Open();
+            try
+            {
+
+                SqlCommand cmd;
+                cmd = new SqlCommand("Update booking SET @updateBooking = @isTrue WHERE id = @bookingId");
+                cmd.Parameters.AddWithValue("@isTrue", true);
+                cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                if (updateValue == "CheckIn")
+                {
+                    cmd.Parameters.AddWithValue("@updateBooking", "is_checkedin");
+                }else if (updateValue == "CheckOut")
+                {
+                    cmd.Parameters.AddWithValue("@updateBooking", "is_checkedout");
+                }
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        
         }
     }
 }
