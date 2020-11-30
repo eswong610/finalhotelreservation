@@ -32,6 +32,7 @@ namespace FinalHotelReservation
             {
                 //MessageBox.Show("new booking");
                 InitializeAvailableRoomsGridView();
+                InitializeSelectedRoomOnBooking();
             }
         }
 
@@ -147,6 +148,20 @@ namespace FinalHotelReservation
                 // Put the cells in edit mode when user enters them.
                 AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
             } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private void InitializeSelectedRoomOnBooking()
+        {
+            try
+            {
+                // Set up the data source.
+                List<string> dt = DB.RetreiveRoomDescriptions();
+                SelectedRoomOnBooking.DataSource = dt;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
@@ -280,6 +295,11 @@ namespace FinalHotelReservation
         {
             //update with selected item booking id
             DB.UpdateBooking(9, "CheckOut");
+        }
+
+        private void SelectedRoomOnBooking_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
