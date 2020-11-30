@@ -43,7 +43,6 @@
             this.AvailableRoomsGridView = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.SelectedRoomOnBooking = new System.Windows.Forms.TextBox();
-            this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.GuestSearchBtn = new System.Windows.Forms.Button();
             this.phoneNumberTextBox = new System.Windows.Forms.TextBox();
             this.firstNameTextBox = new System.Windows.Forms.TextBox();
@@ -89,7 +88,6 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteRow = new System.Windows.Forms.ToolStripButton();
             this.button2 = new System.Windows.Forms.Button();
-            this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -99,7 +97,7 @@
             this.checkInBtn = new System.Windows.Forms.Button();
             this.checkOutBtn = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.SearchBookingsGridView = new System.Windows.Forms.DataGridView();
             this.searchAvailableRoomsBtn = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -114,6 +112,8 @@
             this.lastNameTextBox = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.checkInPhoneTextBox = new System.Windows.Forms.TextBox();
+            this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             emailLabel = new System.Windows.Forms.Label();
             phoneNumberLabel = new System.Windows.Forms.Label();
             RoomType = new System.Windows.Forms.Label();
@@ -123,7 +123,6 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AvailableRoomsGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).BeginInit();
             this.NewGuestTab.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -132,10 +131,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).BeginInit();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchBookingsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GuestSearchResultsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // emailLabel
@@ -295,10 +295,6 @@
             this.SelectedRoomOnBooking.Name = "SelectedRoomOnBooking";
             this.SelectedRoomOnBooking.Size = new System.Drawing.Size(352, 20);
             this.SelectedRoomOnBooking.TabIndex = 5;
-            // 
-            // guestBindingSource
-            // 
-            this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
             // 
             // GuestSearchBtn
             // 
@@ -731,10 +727,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.RefreshGuestsGrid);
             // 
-            // guestBindingSource1
-            // 
-            this.guestBindingSource1.DataSource = typeof(FinalHotelReservation.Data.Guest);
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -778,9 +770,7 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.dataGridView1);
-            this.groupBox5.Controls.Add(this.checkOutBtn);
-            this.groupBox5.Controls.Add(this.checkInBtn);
+            this.groupBox5.Controls.Add(this.SearchBookingsGridView);
             this.groupBox5.Location = new System.Drawing.Point(352, 21);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(406, 333);
@@ -790,7 +780,7 @@
             // 
             // checkInBtn
             // 
-            this.checkInBtn.Location = new System.Drawing.Point(6, 300);
+            this.checkInBtn.Location = new System.Drawing.Point(368, 449);
             this.checkInBtn.Name = "checkInBtn";
             this.checkInBtn.Size = new System.Drawing.Size(126, 27);
             this.checkInBtn.TabIndex = 0;
@@ -800,7 +790,7 @@
             // 
             // checkOutBtn
             // 
-            this.checkOutBtn.Location = new System.Drawing.Point(276, 300);
+            this.checkOutBtn.Location = new System.Drawing.Point(649, 445);
             this.checkOutBtn.Name = "checkOutBtn";
             this.checkOutBtn.Size = new System.Drawing.Size(124, 27);
             this.checkOutBtn.TabIndex = 1;
@@ -816,17 +806,18 @@
             this.button5.TabIndex = 6;
             this.button5.Text = "Search For Bookings";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // dataGridView1
+            // SearchBookingsGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(402, 268);
-            this.dataGridView1.TabIndex = 2;
+            this.SearchBookingsGridView.AllowUserToAddRows = false;
+            this.SearchBookingsGridView.AllowUserToDeleteRows = false;
+            this.SearchBookingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SearchBookingsGridView.Location = new System.Drawing.Point(4, 19);
+            this.SearchBookingsGridView.Name = "SearchBookingsGridView";
+            this.SearchBookingsGridView.ReadOnly = true;
+            this.SearchBookingsGridView.Size = new System.Drawing.Size(402, 259);
+            this.SearchBookingsGridView.TabIndex = 2;
             // 
             // searchAvailableRoomsBtn
             // 
@@ -948,12 +939,22 @@
             this.checkInPhoneTextBox.Size = new System.Drawing.Size(309, 20);
             this.checkInPhoneTextBox.TabIndex = 8;
             // 
+            // guestBindingSource
+            // 
+            this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
+            // 
+            // guestBindingSource1
+            // 
+            this.guestBindingSource1.DataSource = typeof(FinalHotelReservation.Data.Guest);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 513);
+            this.Controls.Add(this.checkOutBtn);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.checkInBtn);
             this.Controls.Add(this.MenuNavigate);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button1);
@@ -968,7 +969,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.AvailableRoomsGridView)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).EndInit();
             this.NewGuestTab.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -981,10 +981,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).EndInit();
             this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchBookingsGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GuestSearchResultsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1053,7 +1054,7 @@
         private System.Windows.Forms.TextBox SelectedRoomOnBooking;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView SearchBookingsGridView;
         private System.Windows.Forms.Button checkOutBtn;
         private System.Windows.Forms.Button checkInBtn;
         private System.Windows.Forms.TextBox CheckinLastNameTextBox;

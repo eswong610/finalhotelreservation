@@ -48,7 +48,7 @@ namespace FinalHotelReservation
                 cmd.CommandText = "DROP TABLE IF EXISTS users;";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE users(user_id INT IDENTITY PRIMARY KEY,email VARCHAR(255) UNIQUE NOT NULL,first_name VARCHAR(255) NOT NULL,last_name VARCHAR(255) NOT NULL,birth_date VARCHAR(255) NOT NULL,address VARCHAR(255),city VARCHAR(255),country VARCHAR(255))";
+                cmd.CommandText = "CREATE TABLE users(user_id INT IDENTITY PRIMARY KEY,email VARCHAR(255) UNIQUE NOT NULL,first_name VARCHAR(255) NOT NULL,last_name VARCHAR(255) NOT NULL,birth_date VARCHAR(255) NOT NULL,address VARCHAR(255),city VARCHAR(255),country VARCHAR(255), telephone VARCHAR(50))";
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "CREATE TABLE room_type(roomtype_id INT NOT NULL PRIMARY KEY, description VARCHAR(255), num_beds INT,max_occupancy INT,smoker bit,room_view bit,basic_price decimal)";
@@ -63,13 +63,13 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY,promo_code VARCHAR(255) NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date,FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id), is_checkedin bit, is_checkout bit)";
+                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date,FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id), is_checkedin bit, is_checkedout bit)";
                 cmd.ExecuteNonQuery();
 
                 //users
-                cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country) VALUES (\'joe@smith.com\', \'joe\', \'smith\', \'November, 11, 1990\', \'100 sharp crescent\', \'seattle\', \'united states\')";
+                cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country, telephone) VALUES (\'joe@smith.com\', \'joe\', \'smith\', \'November, 11, 1990\', \'100 sharp crescent\', \'seattle\', \'united states\', \'60471234567\')";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country) VALUES (\'alice@wong.com\', \'alice\', \'wong\', \'July, 7, 1992\', \'100 zombie valley\', \'san francisco\', \'united states\')";
+                cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country, telephone) VALUES (\'alice@wong.com\', \'alice\', \'wong\', \'July, 7, 1992\', \'100 zombie valley\', \'san francisco\', \'united states\', \'77898765412\')";
                 cmd.ExecuteNonQuery();
 
                 //roomtypes
@@ -133,9 +133,9 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
 
                 //bookings (booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date)
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 1, 2, 0, \'20201201\', \'20201215\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 1, 2, 0, \'20201201\', \'20201215\', 0, 0)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (2, 2, 2, 0, \'20201201\', \'20201215\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (2, 2, 2, 0, \'20201201\', \'20201215\', 1, 0)";
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 1, 2, 0, \'20200101\', \'20200101\')";
@@ -341,28 +341,71 @@ namespace FinalHotelReservation
             }
         }
 
-        public static DataTable UpdateBooking (int bookingId, string updateValue)
+        public static DataTable GetFilteredBookings(string firstName, string lastName, string phoneNumber)
+        {
+            var con = Open();
+
+
+            try
+            {
+                SqlCommand cmd;
+
+                cmd = new SqlCommand("SELECT booking.booking_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout FROM booking WHERE booking.user_id IN (SELECT user_id FROM users WHERE first_name = @firstName OR last_name = @lastName OR telephone = @phoneNumber)", con);
+                //cmd = new SqlCommand("SELECT booking.booking_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout FROM booking WHERE booking.user_id IN (SELECT user_id FROM users WHERE first_name LIKE ISNULL (@firstName, first_name) AND last_name LIKE ISNULL (@lastName, last_name) AND telephone LIKE ISNULL (@phoneNumber, telephone))", con);
+
+                cmd.Parameters.AddWithValue("@lastName", (object)lastName ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@phoneNumber", (object)phoneNumber ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@firstName", (object)firstName ?? DBNull.Value);
+               
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static string UpdateBooking (int bookingId, string updateValue)
         {
             var con = Open();
             try
             {
 
                 SqlCommand cmd;
-                cmd = new SqlCommand("Update booking SET @updateBooking = @isTrue WHERE id = @bookingId");
-                cmd.Parameters.AddWithValue("@isTrue", true);
-                cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                
+
+                //cmd.Parameters.Add("@isTrue", SqlDbType.Bit).Value = 0;
+
                 if (updateValue == "CheckIn")
                 {
-                    cmd.Parameters.AddWithValue("@updateBooking", "is_checkedin");
-                }else if (updateValue == "CheckOut")
-                {
-                    cmd.Parameters.AddWithValue("@updateBooking", "is_checkedout");
-                }
+                    cmd = new SqlCommand("Update booking SET is_checkedin = 1 WHERE booking_id = @bookingId", con);
+                    cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                    cmd.ExecuteNonQuery();
+                    return "Checked In Selected Booking";
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                return dt;
+                }
+                else if (updateValue == "CheckOut")
+                {
+                    cmd = new SqlCommand("Update booking SET is_checkedout = 1 WHERE booking_id = @bookingId", con);
+                    cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                    cmd.ExecuteNonQuery();
+                    return "Checked Out Selected Booking";
+                }
+                else
+                {
+                    return "No updates were made.";
+                }
+                
+                
             }
             catch (Exception e)
             {
