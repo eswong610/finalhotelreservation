@@ -122,30 +122,34 @@ namespace FinalHotelReservation
 
         private void InitializeDataGridView()
         {
+            try
+            {
+                // Set up the DataGridView.
+                AllGuestsDataView.Dock = DockStyle.Fill;
 
+                // Automatically generate the DataGridView columns.
+                AllGuestsDataView.AutoGenerateColumns = true;
 
-            // Set up the DataGridView.
-            AllGuestsDataView.Dock = DockStyle.Fill;
+                // Set up the data source.
+                //bindingSource1.DataSource = dbContext.Guests.ToList();
+                //AllGuestsDataView.DataSource = bindingSource1;
 
-            // Automatically generate the DataGridView columns.
-            AllGuestsDataView.AutoGenerateColumns = true;
+                DataTable dt = DB.RetreiveUser();
+                AllGuestsDataView.DataSource = dt;
 
-            // Set up the data source.
-            //bindingSource1.DataSource = dbContext.Guests.ToList();
-            //AllGuestsDataView.DataSource = bindingSource1;
+                // Automatically resize the visible rows.
+                AllGuestsDataView.AutoSizeRowsMode =
+                    DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
 
-            DataTable dt = DB.RetreiveUser();
-            AllGuestsDataView.DataSource = dt;
+                // Set the DataGridView control's border.
+                AllGuestsDataView.BorderStyle = BorderStyle.Fixed3D;
 
-            // Automatically resize the visible rows.
-            AllGuestsDataView.AutoSizeRowsMode =
-                DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
-
-            // Set the DataGridView control's border.
-            AllGuestsDataView.BorderStyle = BorderStyle.Fixed3D;
-
-            // Put the cells in edit mode when user enters them.
-            AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
+                // Put the cells in edit mode when user enters them.
+                AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
 
@@ -228,8 +232,16 @@ namespace FinalHotelReservation
 
         private void RefreshGuestsGrid(object sender, EventArgs e)
         {
-            DataTable dt = DB.RetreiveUser();
-            AllGuestsDataView.DataSource = dt;
+            //DataTable dt = DB.RetreiveUser();
+            //AllGuestsDataView.DataSource = dt;
+            //or
+            //List<string> row = DB.RetreiveUserAsList("joe@smith.com");
+            //foreach (var column in row)
+            //{
+            //    Console.WriteLine(column);
+            //}
+
+            DB.RetreiveRoomDescriptions();
         }
 
         private void groupBox4_Enter(object sender, EventArgs e)
