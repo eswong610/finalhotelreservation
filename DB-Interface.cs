@@ -63,7 +63,9 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY,promo_code VARCHAR(255) NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date,FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id), is_checkedin bit, is_checkedout bit)";
+
+                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date, is_checkedin bit, is_checkout bit, FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id))";
+
                 cmd.ExecuteNonQuery();
 
                 //users
@@ -226,6 +228,11 @@ namespace FinalHotelReservation
             //return (String.Format("{0}, {1}", reader[0], reader[1]));
         }
 
+        //public static T GetFieldValue<T>(this SqlDataReader reader, string columnName)
+        //{
+        //    return reader.GetFieldValue<T>(reader.GetOrdinal(columnName));
+        //}
+
 
         public static DataTable RetreiveUser()
         {
@@ -233,7 +240,7 @@ namespace FinalHotelReservation
             try
             {
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users", con);
-                
+
                 //SqlDataReader reader = cmd.ExecuteReader();
 
                 //while (reader.Read())
@@ -307,23 +314,98 @@ namespace FinalHotelReservation
             }
         }
 
-
-        public static DataTable RetreiveAvailableRooms(string checkInDate, string checkOutDate)
+        public static List<string> RetreiveUserAsList(string email)
         {
             var con = Open();
             try
             {
                 SqlCommand cmd;
-                if (checkInDate == "" || checkOutDate == "")
+                if (email == "")
+                {
+                    throw new Exception("email empty.");
+                }
+                else
+                {
+                    cmd = new SqlCommand("SELECT * FROM users WHERE email=@email", con);
+                    cmd.Parameters.AddWithValue("@email", email);
+                }
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<string> row = new List<string>();
+
+                while (reader.Read())
+                {
+                    //email, first_name, last_name, birth_date, address, city, country
+                    //object userID = reader.GetValue("user_id");
+                    string userID = reader.GetValue(1).ToString();
+                    string firstName = reader.GetValue(2).ToString();
+                    string lastName = reader.GetValue(3).ToString();
+                    row.Add(userID);
+                    row.Add(firstName);
+                    row.Add(lastName);
+                    Console.WriteLine(userID);
+                    Console.WriteLine(firstName);
+                    Console.WriteLine(lastName);
+                }
+
+
+
+                reader.Close();
+
+
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //DataTable dt = new DataTable();
+                //da.Fill(dt);
+                //return dt;
+                return row;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+        public static DataTable RetreiveAvailableRooms(string checkInDate, string checkOutDate, string descriptionFilter)
+        {
+            string defaultFilter = "All room types";
+            var con = Open();
+            try
+            {
+                SqlCommand cmd;
+                if (descriptionFilter == defaultFilter && checkInDate == "" || descriptionFilter == defaultFilter && checkOutDate == "")
                 {
                     cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id", con);
-                } else
+                } else if (descriptionFilter != defaultFilter && checkInDate == "" || descriptionFilter != defaultFilter && checkOutDate == "")
                 {
-                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date", con);
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE description LIKE @descriptionFilter", con);
+                    cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                    cmd.Parameters.AddWithValue("@descriptionFilter", descriptionFilter);
+                }
+                else if (descriptionFilter == defaultFilter)
+                {
+                    //Console.WriteLine(checkInDate);
+                    //Console.WriteLine(checkOutDate);
+                    Console.WriteLine("default filter");
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date)", con);
                     cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
                     cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
                 }
-                
+                else
+                {
+                    Console.WriteLine("custom filter");
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date) AND description=@descriptionFilter", con);
+                    cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                    cmd.Parameters.AddWithValue("@descriptionFilter", descriptionFilter);
+                }
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -342,7 +424,8 @@ namespace FinalHotelReservation
         }
 
         public static DataTable GetFilteredBookings(string firstName, string lastName, string phoneNumber)
-        {
+
+        { 
             var con = Open();
 
 
@@ -356,12 +439,11 @@ namespace FinalHotelReservation
                 cmd.Parameters.AddWithValue("@lastName", (object)lastName ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@phoneNumber", (object)phoneNumber ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@firstName", (object)firstName ?? DBNull.Value);
-               
-
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 return dt;
+
             }
             catch (Exception e)
             {
@@ -373,15 +455,54 @@ namespace FinalHotelReservation
                 con.Close();
             }
         }
+        
+        
+        
+        //    public static DataTable UpdateBooking(int bookingId, string updateValue)
+        //    {
+        //    var con = Open();
 
-        public static string UpdateBooking (int bookingId, string updateValue)
+        //    try
+        //    { 
+
+        //            SqlCommand cmd;
+        //        cmd = new SqlCommand("Update booking SET @updateBooking = @isTrue WHERE id = @bookingId");
+        //        cmd.Parameters.AddWithValue("@isTrue", true);
+        //        cmd.Parameters.AddWithValue("@bookingId", bookingId);
+        //        if (updateValue == "CheckIn")
+        //        {
+        //            cmd.Parameters.AddWithValue("@updateBooking", "is_checkedin");
+        //        }
+        //        else if (updateValue == "CheckOut")
+        //        {
+        //            cmd.Parameters.AddWithValue("@updateBooking", "is_checkedout");
+        //        }
+
+        //        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //        DataTable dt = new DataTable();
+        //        da.Fill(dt);
+        //        return dt;
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //        throw e;
+        //    }
+        //    finally
+        //    {
+        //        con.Close();
+        //    }
+        //}
+
+        public static string UpdateBooking(int bookingId, string updateValue)
         {
             var con = Open();
             try
             {
 
                 SqlCommand cmd;
-                
+
 
                 //cmd.Parameters.Add("@isTrue", SqlDbType.Bit).Value = 0;
 
@@ -404,8 +525,8 @@ namespace FinalHotelReservation
                 {
                     return "No updates were made.";
                 }
-                
-                
+
+
             }
             catch (Exception e)
             {
@@ -416,7 +537,40 @@ namespace FinalHotelReservation
             {
                 con.Close();
             }
-        
         }
+
+        public static List<string> RetreiveRoomDescriptions()
+        {
+            var con = Open();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT description from room_type", con);
+
+                List<string> columnValues = new List<string>();
+                columnValues.Add("All room types");
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                //return dt;
+                foreach (DataRow row in dt.Rows)
+                {
+                    columnValues.Add(row["description"].ToString());
+                    //Console.WriteLine(row["description"].ToString());
+                }
+
+                return columnValues;
+
+            } catch (Exception e)
+            {
+                throw e;
+            } finally
+            {
+                con.Close();
+            } 
+        }
+
+        
     }
+        
 }

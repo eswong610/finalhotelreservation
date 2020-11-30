@@ -32,6 +32,7 @@ namespace FinalHotelReservation
             {
                 //MessageBox.Show("new booking");
                 InitializeAvailableRoomsGridView();
+                InitializeSelectedRoomOnBooking();
             }
         }
 
@@ -122,30 +123,48 @@ namespace FinalHotelReservation
 
         private void InitializeDataGridView()
         {
+            try
+            {
+                // Set up the DataGridView.
+                AllGuestsDataView.Dock = DockStyle.Fill;
 
+                // Automatically generate the DataGridView columns.
+                AllGuestsDataView.AutoGenerateColumns = true;
 
-            // Set up the DataGridView.
-            AllGuestsDataView.Dock = DockStyle.Fill;
+                // Set up the data source.
+                //bindingSource1.DataSource = dbContext.Guests.ToList();
+                //AllGuestsDataView.DataSource = bindingSource1;
 
-            // Automatically generate the DataGridView columns.
-            AllGuestsDataView.AutoGenerateColumns = true;
+                DataTable dt = DB.RetreiveUser();
+                AllGuestsDataView.DataSource = dt;
 
-            // Set up the data source.
-            //bindingSource1.DataSource = dbContext.Guests.ToList();
-            //AllGuestsDataView.DataSource = bindingSource1;
+                // Automatically resize the visible rows.
+                AllGuestsDataView.AutoSizeRowsMode =
+                    DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
 
-            DataTable dt = DB.RetreiveUser();
-            AllGuestsDataView.DataSource = dt;
+                // Set the DataGridView control's border.
+                AllGuestsDataView.BorderStyle = BorderStyle.Fixed3D;
 
-            // Automatically resize the visible rows.
-            AllGuestsDataView.AutoSizeRowsMode =
-                DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+                // Put the cells in edit mode when user enters them.
+                AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
-            // Set the DataGridView control's border.
-            AllGuestsDataView.BorderStyle = BorderStyle.Fixed3D;
-
-            // Put the cells in edit mode when user enters them.
-            AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
+        private void InitializeSelectedRoomOnBooking()
+        {
+            try
+            {
+                // Set up the data source.
+                List<string> dt = DB.RetreiveRoomDescriptions();
+                SelectedRoomOnBooking.DataSource = dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
 
@@ -160,7 +179,7 @@ namespace FinalHotelReservation
             AvailableRoomsGridView.AutoGenerateColumns = true;
 
             // Set up the data source.
-            DataTable dt = DB.RetreiveAvailableRooms("", ""); //takes checkInDate/checkOutDate as YYYYMMDD
+            DataTable dt = DB.RetreiveAvailableRooms("", "", "All room types"); //takes checkInDate/checkOutDate as YYYYMMDD
             AvailableRoomsGridView.DataSource = dt;
 
             // Automatically resize the visible rows.
@@ -228,8 +247,16 @@ namespace FinalHotelReservation
 
         private void RefreshGuestsGrid(object sender, EventArgs e)
         {
-            DataTable dt = DB.RetreiveUser();
-            AllGuestsDataView.DataSource = dt;
+            //DataTable dt = DB.RetreiveUser();
+            //AllGuestsDataView.DataSource = dt;
+            //or
+            //List<string> row = DB.RetreiveUserAsList("joe@smith.com");
+            //foreach (var column in row)
+            //{
+            //    Console.WriteLine(column);
+            //}
+
+            DB.RetreiveRoomDescriptions();
         }
 
         private void groupBox4_Enter(object sender, EventArgs e)
@@ -253,9 +280,31 @@ namespace FinalHotelReservation
             SelectedRoomOnBooking.Text = AvailableRoomsGridView.SelectedCells[1].Value.ToString();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void SearchAvailableRoomsBtnFunction(object sender, EventArgs e)
         {
+            try
+            {
+                string selection = SelectedRoomOnBooking.SelectedItem.ToString();
+                Console.WriteLine(selection);
+                //default All room types
 
+                if (CheckinDatePicker.Text != null && CheckOutPicker.Text != null)
+                {
+                    string checkin = CheckinDatePicker.Value.ToString("yyyyMMdd");
+                    string checkout = CheckOutPicker.Value.ToString("yyyyMMdd");
+                    DataTable dt = DB.RetreiveAvailableRooms(checkin, checkout, selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+                else
+                {
+                    DataTable dt = DB.RetreiveAvailableRooms("", "", selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+            }
+            catch (Exception err)
+            {
+                Console.Write(err);
+            }
         }
 
         private void checkInBtn_Click(object sender, EventArgs e)
@@ -323,6 +372,33 @@ namespace FinalHotelReservation
 
             // Put the cells in edit mode when user enters them.
             SearchBookingsGridView.EditMode = DataGridViewEditMode.EditOnEnter;
+        }
+
+        private void SelectedRoomOnBooking_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string selection = SelectedRoomOnBooking.SelectedItem.ToString();
+                Console.WriteLine(selection);
+                //default All room types
+
+                if (CheckinDatePicker.Text != null && CheckOutPicker.Text != null)
+                {
+                    string checkin = CheckinDatePicker.Value.ToString("yyyyMMdd");
+                    string checkout = CheckOutPicker.Value.ToString("yyyyMMdd");
+                    DataTable dt = DB.RetreiveAvailableRooms(checkin, checkout, selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+                else
+                {
+                    DataTable dt = DB.RetreiveAvailableRooms("", "", selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+            } catch (Exception err)
+            {
+                Console.Write(err);
+            }
+            
         }
     }
 }
