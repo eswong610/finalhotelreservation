@@ -63,7 +63,7 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY,promo_code VARCHAR(255) NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date,FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id), is_checkedin bit, is_checkout bit)";
+                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date, is_checkedin bit, is_checkout bit, FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id))";
                 cmd.ExecuteNonQuery();
 
                 //users
@@ -387,14 +387,23 @@ namespace FinalHotelReservation
                     cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
                     cmd.Parameters.AddWithValue("@descriptionFilter", descriptionFilter);
                 }
+                else if (descriptionFilter == defaultFilter)
+                {
+                    //Console.WriteLine(checkInDate);
+                    //Console.WriteLine(checkOutDate);
+                    Console.WriteLine("default filter");
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date)", con);
+                    cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                }
                 else
                 {
-                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE description LIKE @descriptionFilter AND @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date", con);
+                    Console.WriteLine("custom filter");
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date) AND description=@descriptionFilter", con);
                     cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
                     cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
                     cmd.Parameters.AddWithValue("@descriptionFilter", descriptionFilter);
                 }
-
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();

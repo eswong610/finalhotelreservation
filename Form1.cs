@@ -280,9 +280,31 @@ namespace FinalHotelReservation
             SelectedRoomOnBooking.Text = AvailableRoomsGridView.SelectedCells[1].Value.ToString();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void SearchAvailableRoomsBtnFunction(object sender, EventArgs e)
         {
+            try
+            {
+                string selection = SelectedRoomOnBooking.SelectedItem.ToString();
+                Console.WriteLine(selection);
+                //default All room types
 
+                if (CheckinDatePicker.Text != null && CheckOutPicker.Text != null)
+                {
+                    string checkin = CheckinDatePicker.Value.ToString("yyyyMMdd");
+                    string checkout = CheckOutPicker.Value.ToString("yyyyMMdd");
+                    DataTable dt = DB.RetreiveAvailableRooms(checkin, checkout, selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+                else
+                {
+                    DataTable dt = DB.RetreiveAvailableRooms("", "", selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+            }
+            catch (Exception err)
+            {
+                Console.Write(err);
+            }
         }
 
         private void checkInBtn_Click(object sender, EventArgs e)
@@ -299,12 +321,29 @@ namespace FinalHotelReservation
 
         private void SelectedRoomOnBooking_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selection = SelectedRoomOnBooking.SelectedItem.ToString();
-            Console.WriteLine(selection);
-            //default All room types
+            try
+            {
+                string selection = SelectedRoomOnBooking.SelectedItem.ToString();
+                Console.WriteLine(selection);
+                //default All room types
 
-            DataTable dt = DB.RetreiveAvailableRooms("", "", selection); //takes checkInDate/checkOutDate as YYYYMMDD
-            AvailableRoomsGridView.DataSource = dt;
+                if (CheckinDatePicker.Text != null && CheckOutPicker.Text != null)
+                {
+                    string checkin = CheckinDatePicker.Value.ToString("yyyyMMdd");
+                    string checkout = CheckOutPicker.Value.ToString("yyyyMMdd");
+                    DataTable dt = DB.RetreiveAvailableRooms(checkin, checkout, selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+                else
+                {
+                    DataTable dt = DB.RetreiveAvailableRooms("", "", selection); //takes checkInDate/checkOutDate as YYYYMMDD
+                    AvailableRoomsGridView.DataSource = dt;
+                }
+            } catch (Exception err)
+            {
+                Console.Write(err);
+            }
+            
         }
     }
 }

@@ -52,11 +52,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.NewBookingTab = new System.Windows.Forms.TabPage();
             this.createNewBooking = new System.Windows.Forms.Button();
-            this.newBookingCheckOuttextbox = new System.Windows.Forms.TextBox();
-            this.newBookingCheckIntextbox = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.searchAvailableRoomsBtn = new System.Windows.Forms.Button();
+            this.SearchAvailableRoomsBtn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.AvailableRoomsGridView = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -113,6 +111,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SelectedRoomOnBooking = new System.Windows.Forms.ComboBox();
+            this.CheckinDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.CheckOutPicker = new System.Windows.Forms.DateTimePicker();
             this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             emailLabel = new System.Windows.Forms.Label();
@@ -357,14 +357,14 @@
             // 
             // NewBookingTab
             // 
+            this.NewBookingTab.Controls.Add(this.CheckOutPicker);
+            this.NewBookingTab.Controls.Add(this.CheckinDatePicker);
             this.NewBookingTab.Controls.Add(this.SelectedRoomOnBooking);
             this.NewBookingTab.Controls.Add(this.comboBox1);
             this.NewBookingTab.Controls.Add(this.createNewBooking);
-            this.NewBookingTab.Controls.Add(this.newBookingCheckOuttextbox);
-            this.NewBookingTab.Controls.Add(this.newBookingCheckIntextbox);
             this.NewBookingTab.Controls.Add(this.label15);
             this.NewBookingTab.Controls.Add(this.label14);
-            this.NewBookingTab.Controls.Add(this.searchAvailableRoomsBtn);
+            this.NewBookingTab.Controls.Add(this.SearchAvailableRoomsBtn);
             this.NewBookingTab.Controls.Add(RoomType);
             this.NewBookingTab.Controls.Add(this.groupBox4);
             this.NewBookingTab.Controls.Add(this.groupBox3);
@@ -387,22 +387,6 @@
             this.createNewBooking.Text = "Create New Booking";
             this.createNewBooking.UseVisualStyleBackColor = true;
             // 
-            // newBookingCheckOuttextbox
-            // 
-            this.newBookingCheckOuttextbox.Location = new System.Drawing.Point(977, 76);
-            this.newBookingCheckOuttextbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.newBookingCheckOuttextbox.Name = "newBookingCheckOuttextbox";
-            this.newBookingCheckOuttextbox.Size = new System.Drawing.Size(417, 29);
-            this.newBookingCheckOuttextbox.TabIndex = 11;
-            // 
-            // newBookingCheckIntextbox
-            // 
-            this.newBookingCheckIntextbox.Location = new System.Drawing.Point(517, 76);
-            this.newBookingCheckIntextbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.newBookingCheckIntextbox.Name = "newBookingCheckIntextbox";
-            this.newBookingCheckIntextbox.Size = new System.Drawing.Size(420, 29);
-            this.newBookingCheckIntextbox.TabIndex = 10;
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -423,16 +407,16 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "Check In";
             // 
-            // searchAvailableRoomsBtn
+            // SearchAvailableRoomsBtn
             // 
-            this.searchAvailableRoomsBtn.Location = new System.Drawing.Point(1190, 157);
-            this.searchAvailableRoomsBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.searchAvailableRoomsBtn.Name = "searchAvailableRoomsBtn";
-            this.searchAvailableRoomsBtn.Size = new System.Drawing.Size(209, 42);
-            this.searchAvailableRoomsBtn.TabIndex = 7;
-            this.searchAvailableRoomsBtn.Text = "Search Rooms";
-            this.searchAvailableRoomsBtn.UseVisualStyleBackColor = true;
-            this.searchAvailableRoomsBtn.Click += new System.EventHandler(this.button6_Click);
+            this.SearchAvailableRoomsBtn.Location = new System.Drawing.Point(1190, 157);
+            this.SearchAvailableRoomsBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.SearchAvailableRoomsBtn.Name = "SearchAvailableRoomsBtn";
+            this.SearchAvailableRoomsBtn.Size = new System.Drawing.Size(209, 42);
+            this.SearchAvailableRoomsBtn.TabIndex = 7;
+            this.SearchAvailableRoomsBtn.Text = "Search Rooms";
+            this.SearchAvailableRoomsBtn.UseVisualStyleBackColor = true;
+            this.SearchAvailableRoomsBtn.Click += new System.EventHandler(this.SearchAvailableRoomsBtnFunction);
             // 
             // groupBox4
             // 
@@ -1023,6 +1007,22 @@
             this.SelectedRoomOnBooking.TabIndex = 14;
             this.SelectedRoomOnBooking.SelectedIndexChanged += new System.EventHandler(this.SelectedRoomOnBooking_SelectedIndexChanged);
             // 
+            // CheckinDatePicker
+            // 
+            this.CheckinDatePicker.CustomFormat = "YYYYMMDD";
+            this.CheckinDatePicker.Location = new System.Drawing.Point(517, 88);
+            this.CheckinDatePicker.Name = "CheckinDatePicker";
+            this.CheckinDatePicker.Size = new System.Drawing.Size(420, 29);
+            this.CheckinDatePicker.TabIndex = 15;
+            // 
+            // CheckOutPicker
+            // 
+            this.CheckOutPicker.CustomFormat = "YYYYMMDD";
+            this.CheckOutPicker.Location = new System.Drawing.Point(977, 88);
+            this.CheckOutPicker.Name = "CheckOutPicker";
+            this.CheckOutPicker.Size = new System.Drawing.Size(415, 29);
+            this.CheckOutPicker.TabIndex = 16;
+            // 
             // guestBindingSource
             // 
             this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
@@ -1144,11 +1144,9 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox newBookingCheckOuttextbox;
-        private System.Windows.Forms.TextBox newBookingCheckIntextbox;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button searchAvailableRoomsBtn;
+        private System.Windows.Forms.Button SearchAvailableRoomsBtn;
         private System.Windows.Forms.ComboBox promoCodeDropDown;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DataGridView GuestSearchResultsDataGridView;
@@ -1160,6 +1158,8 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox SelectedRoomOnBooking;
+        private System.Windows.Forms.DateTimePicker CheckOutPicker;
+        private System.Windows.Forms.DateTimePicker CheckinDatePicker;
     }
 }
 
