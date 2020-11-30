@@ -179,7 +179,7 @@ namespace FinalHotelReservation
             AvailableRoomsGridView.AutoGenerateColumns = true;
 
             // Set up the data source.
-            DataTable dt = DB.RetreiveAvailableRooms("", ""); //takes checkInDate/checkOutDate as YYYYMMDD
+            DataTable dt = DB.RetreiveAvailableRooms("", "", "All room types"); //takes checkInDate/checkOutDate as YYYYMMDD
             AvailableRoomsGridView.DataSource = dt;
 
             // Automatically resize the visible rows.
@@ -297,9 +297,14 @@ namespace FinalHotelReservation
             DB.UpdateBooking(9, "CheckOut");
         }
 
-        private void SelectedRoomOnBooking_TextChanged(object sender, EventArgs e)
+        private void SelectedRoomOnBooking_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string selection = SelectedRoomOnBooking.SelectedItem.ToString();
+            Console.WriteLine(selection);
+            //default All room types
 
+            DataTable dt = DB.RetreiveAvailableRooms("", "", selection); //takes checkInDate/checkOutDate as YYYYMMDD
+            AvailableRoomsGridView.DataSource = dt;
         }
     }
 }

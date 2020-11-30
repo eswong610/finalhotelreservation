@@ -59,7 +59,6 @@
             this.searchAvailableRoomsBtn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.AvailableRoomsGridView = new System.Windows.Forms.DataGridView();
-            this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lastNameTextBox = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -112,9 +111,10 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteRow = new System.Windows.Forms.ToolStripButton();
             this.button2 = new System.Windows.Forms.Button();
-            this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SelectedRoomOnBooking = new System.Windows.Forms.ComboBox();
+            this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             emailLabel = new System.Windows.Forms.Label();
             phoneNumberLabel = new System.Windows.Forms.Label();
             RoomType = new System.Windows.Forms.Label();
@@ -125,7 +125,6 @@
             this.NewBookingTab.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AvailableRoomsGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GuestSearchResultsDataGridView)).BeginInit();
             this.NewGuestTab.SuspendLayout();
@@ -136,6 +135,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,7 +194,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(11, 22);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(11, 4, 0, 4);
-            this.menuStrip1.Size = new System.Drawing.Size(202, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(352, 42);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -460,10 +460,6 @@
             this.AvailableRoomsGridView.Size = new System.Drawing.Size(883, 372);
             this.AvailableRoomsGridView.TabIndex = 0;
             this.AvailableRoomsGridView.SelectionChanged += new System.EventHandler(this.AvailableRoomSelectionChanged);
-            // 
-            // guestBindingSource
-            // 
-            this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
             // 
             // groupBox3
             // 
@@ -1010,10 +1006,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.RefreshGuestsGrid);
             // 
-            // guestBindingSource1
-            // 
-            this.guestBindingSource1.DataSource = typeof(FinalHotelReservation.Data.Guest);
-            // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
@@ -1029,6 +1021,15 @@
             this.SelectedRoomOnBooking.Name = "SelectedRoomOnBooking";
             this.SelectedRoomOnBooking.Size = new System.Drawing.Size(420, 32);
             this.SelectedRoomOnBooking.TabIndex = 14;
+            this.SelectedRoomOnBooking.SelectedIndexChanged += new System.EventHandler(this.SelectedRoomOnBooking_SelectedIndexChanged);
+            // 
+            // guestBindingSource
+            // 
+            this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
+            // 
+            // guestBindingSource1
+            // 
+            this.guestBindingSource1.DataSource = typeof(FinalHotelReservation.Data.Guest);
             // 
             // Form1
             // 
@@ -1051,7 +1052,6 @@
             this.NewBookingTab.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AvailableRoomsGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GuestSearchResultsDataGridView)).EndInit();
@@ -1067,6 +1067,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

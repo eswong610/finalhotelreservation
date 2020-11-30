@@ -370,20 +370,29 @@ namespace FinalHotelReservation
         }
 
 
-        public static DataTable RetreiveAvailableRooms(string checkInDate, string checkOutDate)
+        public static DataTable RetreiveAvailableRooms(string checkInDate, string checkOutDate, string descriptionFilter)
         {
+            string defaultFilter = "All room types";
             var con = Open();
             try
             {
                 SqlCommand cmd;
-                if (checkInDate == "" || checkOutDate == "")
+                if (descriptionFilter == defaultFilter && checkInDate == "" || descriptionFilter == defaultFilter && checkOutDate == "")
                 {
                     cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id", con);
-                } else
+                } else if (descriptionFilter != defaultFilter && checkInDate == "" || descriptionFilter != defaultFilter && checkOutDate == "")
                 {
-                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date", con);
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE description LIKE @descriptionFilter", con);
                     cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
                     cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                    cmd.Parameters.AddWithValue("@descriptionFilter", descriptionFilter);
+                }
+                else
+                {
+                    cmd = new SqlCommand("SELECT room.room_id, description, num_beds, max_occupancy, smoker, room_view, basic_price, city_name, country, location_address FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room.room_id NOT IN(SELECT room.room_id FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id LEFT JOIN booking ON room.room_id = booking.room_id WHERE description LIKE @descriptionFilter AND @checkInDate BETWEEN booking.check_in_date AND booking.check_out_date AND @checkOutDate BETWEEN booking.check_in_date AND booking.check_out_date", con);
+                    cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                    cmd.Parameters.AddWithValue("@descriptionFilter", descriptionFilter);
                 }
 
 
@@ -451,7 +460,7 @@ namespace FinalHotelReservation
                 SqlCommand cmd = new SqlCommand("SELECT description from room_type", con);
 
                 List<string> columnValues = new List<string>();
-
+                columnValues.Add("All room types");
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
