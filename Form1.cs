@@ -30,7 +30,8 @@ namespace FinalHotelReservation
             }
             else if (MenuNavigate.SelectedTab.Text == "New Booking")
             {
-                MessageBox.Show("new booking");
+                //MessageBox.Show("new booking");
+                InitializeAvailableRoomsGridView();
             }
         }
 
@@ -39,7 +40,7 @@ namespace FinalHotelReservation
         private void button1_Click(object sender, EventArgs e)
         {
             string DBString = "Data Source=localhost;Initial Catalog=HotelReservation;Integrated Security=True;MultipleActiveResultSets=true";
-            
+            DB.ResetSchema();
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -54,78 +55,122 @@ namespace FinalHotelReservation
 
         private void AddNewGuestBtn_Click(object sender, EventArgs e)
         {
-            Entity.Guest dbGuest = null;
-            //search for existing email/phone number
-            //if (dbGuest == null)
-            //{
-            dbGuest = new Entity.Guest
-            {
-                FirstName = newGuestFirstName.Text,
-                LastName = newGuestLastName.Text,
-                PhoneNumber = newGuestTelephone.Text,
-                Email = newGuestEmail.Text,
-                Address = newGuestAddress.Text,
-                City = newGuestCity.Text,
-                Country = newGuestCountry.Text
-            };
 
-            bool isEmailDuplicate = dbContext.Guests.Any(x => x.Email == dbGuest.Email || x.PhoneNumber == dbGuest.PhoneNumber);
-            bool isPhoneDuplicate = dbContext.Guests.Any(x => x.PhoneNumber == dbGuest.PhoneNumber);
-            if (isPhoneDuplicate)
+            try
             {
-                MessageBox.Show("The phone number already exists");
-                goto Error;
+                string firstName = newGuestFirstName.Text;
+                string lastName = newGuestLastName.Text;
+                string birthDate = dobDatePicker.Text;
+                string phoneNumber = newGuestTelephone.Text;
+                string email = newGuestEmail.Text;
+                string address = newGuestAddress.Text;
+                string city = newGuestCity.Text;
+                string country = newGuestCountry.Text;
+                DB.CreateUser(email, firstName, lastName, birthDate, address, city, country);
             }
-            else if (isEmailDuplicate)
+            catch (Exception err)
             {
-                MessageBox.Show("The email already exists; ");
-                goto Error;
+                Console.WriteLine(err);
+                MessageBox.Show(err.Message);
             }
+            //    Entity.Guest dbGuest = null;
+            //    //search for existing email/phone number
+            //    //if (dbGuest == null)
+            //    //{
+            //    dbGuest = new Entity.Guest
+            //    {
+            //        FirstName = newGuestFirstName.Text,
+            //        LastName = newGuestLastName.Text,
+            //        PhoneNumber = newGuestTelephone.Text,
+            //        Email = newGuestEmail.Text,
+            //        Address = newGuestAddress.Text,
+            //        City = newGuestCity.Text,
+            //        Country = newGuestCountry.Text
+            //    };
 
-            if (dbGuest.FirstName.Length == 0 || dbGuest.LastName.Length == 0 || dbGuest.Address.Length == 0 || dbGuest.City.Length ==0 || dbGuest.Country.Length == 0)
-            {
-                MessageBox.Show("You need more info");
-                goto Error;
-                
-            }
-            else
-            {
-                dbContext.Guests.Add(dbGuest);
-                dbContext.SaveChanges();
-                MessageBox.Show("New Guest Successfully Added to Database");
-                newGuestFirstName.Text = newGuestLastName.Text = newGuestTelephone.Text = newGuestEmail.Text = newGuestAddress.Text = newGuestCity.Text = newGuestCountry.Text = "";
-            }
+            //    bool isEmailDuplicate = dbContext.Guests.Any(x => x.Email == dbGuest.Email || x.PhoneNumber == dbGuest.PhoneNumber);
+            //    bool isPhoneDuplicate = dbContext.Guests.Any(x => x.PhoneNumber == dbGuest.PhoneNumber);
+            //    if (isPhoneDuplicate)
+            //    {
+            //        MessageBox.Show("The phone number already exists");
+            //        goto Error;
+            //    }
+            //    else if (isEmailDuplicate)
+            //    {
+            //        MessageBox.Show("The email already exists; ");
+            //        goto Error;
+            //    }
 
-            Error:
-            MessageBox.Show("Failed to Add");
+            //    if (dbGuest.FirstName.Length == 0 || dbGuest.LastName.Length == 0 || dbGuest.Address.Length == 0 || dbGuest.City.Length ==0 || dbGuest.Country.Length == 0)
+            //    {
+            //        MessageBox.Show("You need more info");
+            //        goto Error;
 
-            
+            //    }
+            //    else
+            //    {
+            //        dbContext.Guests.Add(dbGuest);
+            //        dbContext.SaveChanges();
+            //        MessageBox.Show("New Guest Successfully Added to Database");
+            //        newGuestFirstName.Text = newGuestLastName.Text = newGuestTelephone.Text = newGuestEmail.Text = newGuestAddress.Text = newGuestCity.Text = newGuestCountry.Text = "";
+            //    }
+
+            //Error:
+            //    MessageBox.Show("Failed to Add");
+
         }
 
         private void InitializeDataGridView()
         {
-      
-                // Set up the DataGridView.
-                AllGuestsDataView.Dock = DockStyle.Fill;
-
-                // Automatically generate the DataGridView columns.
-                AllGuestsDataView.AutoGenerateColumns = true;
-
-                // Set up the data source.
-                bindingSource1.DataSource = dbContext.Guests.ToList();
-                AllGuestsDataView.DataSource = bindingSource1;
-
-                // Automatically resize the visible rows.
-                AllGuestsDataView.AutoSizeRowsMode =
-                    DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
-
-                // Set the DataGridView control's border.
-                AllGuestsDataView.BorderStyle = BorderStyle.Fixed3D;
-
-                // Put the cells in edit mode when user enters them.
-                AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
 
 
+            // Set up the DataGridView.
+            AllGuestsDataView.Dock = DockStyle.Fill;
+
+            // Automatically generate the DataGridView columns.
+            AllGuestsDataView.AutoGenerateColumns = true;
+
+            // Set up the data source.
+            //bindingSource1.DataSource = dbContext.Guests.ToList();
+            //AllGuestsDataView.DataSource = bindingSource1;
+
+            DataTable dt = DB.RetreiveUser();
+            AllGuestsDataView.DataSource = dt;
+
+            // Automatically resize the visible rows.
+            AllGuestsDataView.AutoSizeRowsMode =
+                DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+
+            // Set the DataGridView control's border.
+            AllGuestsDataView.BorderStyle = BorderStyle.Fixed3D;
+
+            // Put the cells in edit mode when user enters them.
+            AllGuestsDataView.EditMode = DataGridViewEditMode.EditOnEnter;
+        }
+
+
+
+        private void InitializeAvailableRoomsGridView()
+        {
+
+            // Set up the DataGridView.
+            AvailableRoomsGridView.Dock = DockStyle.Fill;
+
+            // Automatically generate the DataGridView columns.
+            AvailableRoomsGridView.AutoGenerateColumns = true;
+
+            // Set up the data source.
+            DataTable dt = DB.RetreiveAvailableRooms("", ""); //takes checkInDate/checkOutDate as YYYYMMDD
+            AvailableRoomsGridView.DataSource = dt;
+
+            // Automatically resize the visible rows.
+            AvailableRoomsGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+
+            // Set the DataGridView control's border.
+            AvailableRoomsGridView.BorderStyle = BorderStyle.Fixed3D;
+
+            // Put the cells in edit mode when user enters them.
+            AvailableRoomsGridView.EditMode = DataGridViewEditMode.EditOnEnter;
         }
 
 
@@ -137,7 +182,7 @@ namespace FinalHotelReservation
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
@@ -164,6 +209,48 @@ namespace FinalHotelReservation
 
             Entity.Guest dbGuest = dbContext.Guests.Where(x => x.Email == guestEmail && x.PhoneNumber == guestPhone).FirstOrDefault();
             MessageBox.Show(dbGuest.FirstName);
+        }
+
+        private void newGuestLastName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dobDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RefreshGuestsGrid(object sender, EventArgs e)
+        {
+            DataTable dt = DB.RetreiveUser();
+            AllGuestsDataView.DataSource = dt;
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AvailableRoomSelectionChanged(object sender, EventArgs e)
+        {
+            var rowsCount = AvailableRoomsGridView.SelectedRows.Count;
+            if (rowsCount == 0 || rowsCount > 1) return;
+
+            var row = AvailableRoomsGridView.SelectedRows[0];
+            if (row == null) return;
+            UpdateRoomSelectedOnBookingScreen(row);
+        }
+
+        private void UpdateRoomSelectedOnBookingScreen(DataGridViewRow row)
+        {
+            Console.WriteLine(row);
+            SelectedRoomOnBooking.Text = AvailableRoomsGridView.SelectedCells[1].Value.ToString();
         }
     }
 }

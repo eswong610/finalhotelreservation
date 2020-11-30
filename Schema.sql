@@ -17,9 +17,8 @@ CREATE TABLE users (
 
 CREATE TABLE room (
 	room_id INT PRIMARY KEY,
-	roomtype_id INT UNIQUE,
-	booking_id INT UNIQUE,
-	location_id INT UNIQUE
+	roomtype_id INT,
+	booking_id INT
 )
 
 CREATE TABLE room_type (

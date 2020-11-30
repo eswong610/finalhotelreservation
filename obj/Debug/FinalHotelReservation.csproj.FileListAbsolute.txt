@@ -13,3 +13,18 @@ C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\Enti
 C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\EntityFramework.xml
 C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Emmy\OneDrive\Documents\C#Classlol\FinalHotelReservation\obj\Debug\FinalHotelReservation.csproj.CopyComplete
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\FinalHotelReservation.exe.config
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\FinalHotelReservation.exe
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\FinalHotelReservation.pdb
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\EntityFramework.dll
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\EntityFramework.xml
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.csprojAssemblyReference.cache
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.Form1.resources
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.Properties.Resources.resources
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.csproj.GenerateResource.cache
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.csproj.CoreCompileInputs.cache
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.csproj.CopyComplete
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.exe
+C:\Users\zeta two\Desktop\BCIT C Sharp\Final Project\finalhotelreservation\obj\Debug\FinalHotelReservation.pdb
