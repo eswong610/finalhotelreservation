@@ -67,7 +67,7 @@ namespace FinalHotelReservation
                 string address = newGuestAddress.Text;
                 string city = newGuestCity.Text;
                 string country = newGuestCountry.Text;
-                DB.CreateUser(email, firstName, lastName, birthDate, address, city, country);
+                DB.CreateUser(email, firstName, lastName, birthDate, address, city, country, phoneNumber);
             }
             catch (Exception err)
             {

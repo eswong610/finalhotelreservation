@@ -64,7 +64,7 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
 
 
-                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date, is_checkedin bit, is_checkout bit, FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id))";
+                cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date, is_checkedin bit, is_checkedout bit, FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id))";
 
                 cmd.ExecuteNonQuery();
 
@@ -195,12 +195,12 @@ namespace FinalHotelReservation
 
 
 
-        public static void CreateUser(string email, string firstName, string lastName, string birthDate, string address, string city, string country)
+        public static void CreateUser(string email, string firstName, string lastName, string birthDate, string address, string city, string country, string phoneNumber)
         {
             var con = Open();
             try
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO users values(@email, @first_name, @last_name, @birth_date, @address, @city, @country)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO users values(@email, @first_name, @last_name, @birth_date, @address, @city, @country, @telephone)", con);
                 cmd.Parameters.AddWithValue("@email", email);
                 cmd.Parameters.AddWithValue("@first_name", firstName);
                 cmd.Parameters.AddWithValue("@last_name", lastName);
@@ -208,6 +208,7 @@ namespace FinalHotelReservation
                 cmd.Parameters.AddWithValue("@address", address);
                 cmd.Parameters.AddWithValue("@city", city);
                 cmd.Parameters.AddWithValue("@country", country);
+                cmd.Parameters.AddWithValue("@telephone", phoneNumber);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception e)
