@@ -226,6 +226,11 @@ namespace FinalHotelReservation
             //return (String.Format("{0}, {1}", reader[0], reader[1]));
         }
 
+        //public static T GetFieldValue<T>(this SqlDataReader reader, string columnName)
+        //{
+        //    return reader.GetFieldValue<T>(reader.GetOrdinal(columnName));
+        //}
+
 
         public static DataTable RetreiveUser()
         {
@@ -233,7 +238,7 @@ namespace FinalHotelReservation
             try
             {
                 SqlCommand cmd = new SqlCommand("SELECT * FROM users", con);
-                
+
                 //SqlDataReader reader = cmd.ExecuteReader();
 
                 //while (reader.Read())
@@ -307,6 +312,63 @@ namespace FinalHotelReservation
             }
         }
 
+        public static List<string> RetreiveUserAsList(string email)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd;
+                if (email == "")
+                {
+                    throw new Exception("email empty.");
+                }
+                else
+                {
+                    cmd = new SqlCommand("SELECT * FROM users WHERE email=@email", con);
+                    cmd.Parameters.AddWithValue("@email", email);
+                }
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<string> row = new List<string>();
+
+                while (reader.Read())
+                {
+                    //email, first_name, last_name, birth_date, address, city, country
+                    //object userID = reader.GetValue("user_id");
+                    string userID = reader.GetValue(1).ToString();
+                    string firstName = reader.GetValue(2).ToString();
+                    string lastName = reader.GetValue(3).ToString();
+                    row.Add(userID);
+                    row.Add(firstName);
+                    row.Add(lastName);
+                    Console.WriteLine(userID);
+                    Console.WriteLine(firstName);
+                    Console.WriteLine(lastName);
+                }
+
+
+
+                reader.Close();
+
+
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //DataTable dt = new DataTable();
+                //da.Fill(dt);
+                //return dt;
+                return row;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
         public static DataTable RetreiveAvailableRooms(string checkInDate, string checkOutDate)
         {
@@ -323,7 +385,7 @@ namespace FinalHotelReservation
                     cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
                     cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
                 }
-                
+
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -341,11 +403,12 @@ namespace FinalHotelReservation
             }
         }
 
-        public static DataTable UpdateBooking (int bookingId, string updateValue)
+        public static DataTable UpdateBooking(int bookingId, string updateValue)
         {
             var con = Open();
             try
             {
+
 
                 SqlCommand cmd;
                 cmd = new SqlCommand("Update booking SET @updateBooking = @isTrue WHERE id = @bookingId");
@@ -354,7 +417,8 @@ namespace FinalHotelReservation
                 if (updateValue == "CheckIn")
                 {
                     cmd.Parameters.AddWithValue("@updateBooking", "is_checkedin");
-                }else if (updateValue == "CheckOut")
+                }
+                else if (updateValue == "CheckOut")
                 {
                     cmd.Parameters.AddWithValue("@updateBooking", "is_checkedout");
                 }
@@ -363,6 +427,7 @@ namespace FinalHotelReservation
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 return dt;
+
             }
             catch (Exception e)
             {
@@ -373,7 +438,40 @@ namespace FinalHotelReservation
             {
                 con.Close();
             }
-        
+        }
+
+
+
+        public static List<string> RetreiveRoomDescriptions()
+        {
+            var con = Open();
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("SELECT description from room_type", con);
+
+                List<string> columnValues = new List<string>();
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    columnValues.Add(row["description"].ToString());
+                    //Console.WriteLine(row["description"].ToString());
+                }
+
+                return columnValues;
+            } catch (Exception e)
+            {
+                throw e;
+            } finally
+            {
+                con.Close();
+            }
+
         }
     }
+        
 }
