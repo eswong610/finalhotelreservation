@@ -67,7 +67,7 @@ namespace FinalHotelReservation
                 string address = newGuestAddress.Text;
                 string city = newGuestCity.Text;
                 string country = newGuestCountry.Text;
-                DB.CreateUser(email, firstName, lastName, birthDate, address, city, country);
+                DB.CreateUser(email, firstName, lastName, birthDate, address, city, country, phoneNumber);
             }
             catch (Exception err)
             {
@@ -309,14 +309,69 @@ namespace FinalHotelReservation
 
         private void checkInBtn_Click(object sender, EventArgs e)
         {
-            //update with selected item booking id
-            DB.UpdateBooking(9, "CheckIn");
+            string checkinFirstName = CheckinFirstName.Text;
+            string checkinLastName = CheckinLastNameTextBox.Text;
+            string checkinPhoneNumber = checkInPhoneTextBox.Text;
+
+            if (SearchBookingsGridView.SelectedRows.Count > 0)
+            {
+                int bookingId = Convert.ToInt32(SearchBookingsGridView.SelectedRows[0].Cells["booking_id"].Value.ToString());
+                MessageBox.Show(DB.UpdateBooking(bookingId, "CheckIn"));
+
+                DataTable dt = DB.GetFilteredBookings(checkinFirstName, checkinLastName, checkinPhoneNumber);
+                SearchBookingsGridView.DataSource = dt;
+            }
+            else
+            {
+                MessageBox.Show("You need to select at least one booking");
+            }
         }
 
         private void checkOutBtn_Click(object sender, EventArgs e)
         {
-            //update with selected item booking id
-            DB.UpdateBooking(9, "CheckOut");
+
+            string checkinFirstName = CheckinFirstName.Text;
+            string checkinLastName = CheckinLastNameTextBox.Text;
+            string checkinPhoneNumber = checkInPhoneTextBox.Text;
+
+            if (SearchBookingsGridView.SelectedRows.Count > 0)
+            {
+                int bookingId = Convert.ToInt32(SearchBookingsGridView.SelectedRows[0].Cells["booking_id"].Value.ToString());
+                MessageBox.Show(DB.UpdateBooking(bookingId, "CheckOut"));
+
+                DataTable dt = DB.GetFilteredBookings(checkinFirstName, checkinLastName, checkinPhoneNumber);
+                SearchBookingsGridView.DataSource = dt;
+            }
+            else
+            {
+                MessageBox.Show("You need to select at least one booking");
+            }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string checkinFirstName = CheckinFirstName.Text;
+            string checkinLastName = CheckinLastNameTextBox.Text;
+            string checkinPhoneNumber = checkInPhoneTextBox.Text;
+            // Set up the DataGridView.
+            SearchBookingsGridView.Dock = DockStyle.Fill;
+
+            // Automatically generate the DataGridView columns.
+            SearchBookingsGridView.AutoGenerateColumns = true;
+
+            // Set up the data source.
+            DataTable dt = DB.GetFilteredBookings(checkinFirstName, checkinLastName, checkinPhoneNumber);
+            SearchBookingsGridView.DataSource = dt;
+
+            // Automatically resize the visible rows.
+            SearchBookingsGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+
+            // Set the DataGridView control's border.
+            SearchBookingsGridView.BorderStyle = BorderStyle.Fixed3D;
+
+            // Put the cells in edit mode when user enters them.
+            SearchBookingsGridView.EditMode = DataGridViewEditMode.EditOnEnter;
         }
 
         private void SelectedRoomOnBooking_SelectedIndexChanged(object sender, EventArgs e)
