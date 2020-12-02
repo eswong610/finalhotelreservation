@@ -192,7 +192,7 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
 
                 //season_pricing season_name VARCHAR(255), season_start Date NOT NULL, season_end Date NOT NULL, price_factor INT NOT NULL
-                cmd.CommandText = "INSERT INTO season_price (season_name, season_start, season_end, price_factor) VALUES (\'christmas\', \'20201215\', \'20210102\', 50)";
+                cmd.CommandText = "INSERT INTO season_pricing (season_name, season_start, season_end, price_factor) VALUES (\'christmas\', \'20201215\', \'20210102\', 50)";
                 cmd.ExecuteNonQuery();
 
 
@@ -330,6 +330,25 @@ namespace FinalHotelReservation
             }
         }
 
+        public static DataTable RetreiveRoomByID (int roomID)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM room JOIN room_type ON room.roomtype_id = room_type.roomtype_id JOIN hotel_location ON room.location_id = hotel_location.location_id WHERE room_id=@roomID", con);
+                cmd.Parameters.AddWithValue("@roomID", roomID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+        }
+
         public static List<string> RetreiveUserAsList(string email)
         {
             var con = Open();
@@ -384,6 +403,34 @@ namespace FinalHotelReservation
             finally
             {
                 con.Close();
+            }
+        }
+
+        public static int RetreiveSeasonAdjustmentRate(string checkInDate, string checkOutDate)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT price_factor FROM season_pricing WHERE @checkInDate BETWEEN season_start AND season_end OR @checkOutDate BETWEEN season_start AND season_end", con);
+                cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                foreach(DataRow row in dt.Rows)
+                {
+                    if (row[0] != null && Convert.ToInt32(row[0]) > 0)
+                    {
+                        return Convert.ToInt32(row[0]);
+                    }
+                }
+                return -1; //sentinal value
+                
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
             }
         }
 

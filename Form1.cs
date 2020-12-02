@@ -418,6 +418,10 @@ namespace FinalHotelReservation
                     {
                         //Console.WriteLine(row["discount"]);
                         PromoCodeOutput.Text = $"{Convert.ToInt32(row["discount"])}% Discount Applied!";
+                        PromoDiscountPercentage.Text = (row["discount"]).ToString();
+                    } else
+                    {
+                        MessageBox.Show("Sorry, invalid promo code.");
                     }
                 }
 
@@ -430,8 +434,70 @@ namespace FinalHotelReservation
 
         private void createNewBooking_Click(object sender, EventArgs e)
         {
-            
+            if (AvailableRoomsGridView.SelectedRows.Count > 0 && GuestSearchResultsDataGridView.SelectedRows.Count > 0)
+            {
+                MenuNavigate.SelectTab(2);
+            }
+            else
+            {
+                MessageBox.Show("Please select a guest and at a room to proceed.");
+            }
         }
 
+        private void CalculatePricingButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int roomID = Int32.Parse(RoomIDBox.Text);
+                string checkInDate = PricingCheckin.Value.ToString("yyyyMMdd");
+                string checkOutDate = PricingCheckout.Value.ToString("yyyyMMdd");
+                int numAdditionalAdults = Int32.Parse(NumAdditionalAdults.Text);
+                int numAdditionalChildren = Int32.Parse(NumAdditionalChildren.Text);
+                int discountPercentage = Int32.Parse(PromoDiscountPercentage.Text);
+
+                int totalGuests = 1 + numAdditionalAdults + numAdditionalChildren;
+                int roomOccupancy = 1;
+                int taxRate = 0;
+                decimal roomBasePrice = -1; //sentinal value
+
+                //get base room price
+                DataTable roomDT = DB.RetreiveRoomByID(roomID);
+                foreach (DataRow row in roomDT.Rows)
+                {
+                    roomOccupancy = Convert.ToInt32(row["max_occupancy"]);
+                    roomBasePrice = Convert.ToDecimal((row["basic_price"]).ToString());
+                    taxRate = Convert.ToInt32(row["tax_Rate"]);
+
+                    Console.WriteLine(roomOccupancy);
+                }
+                int SURCHARGE_RATE_PER_PERSON = 15; //$15 per person
+                int overOccupancySurcharge = totalGuests > roomOccupancy ? (totalGuests - roomOccupancy) * SURCHARGE_RATE_PER_PERSON : 0;
+
+                //check for season price adjustment
+                int seasonAdjustmentRate = DB.RetreiveSeasonAdjustmentRate(checkInDate, checkOutDate);
+                if(seasonAdjustmentRate < 0)
+                {
+                    seasonAdjustmentRate = 0;
+                }
+
+                //final price = location tax * (discount * (season price * (base room price + over occupancy surchage)))
+                decimal totalPrice = ((Convert.ToDecimal(taxRate)/ 100 + 1) * ((1 - Convert.ToDecimal(discountPercentage)/ 100) * ((Convert.ToDecimal(seasonAdjustmentRate)/ 100 + 1)) * (roomBasePrice + Convert.ToDecimal(overOccupancySurcharge))));
+                if (totalPrice <= 0)
+                {
+                    throw new Exception("Invalid Price Calculation Detected.");
+                }
+                Console.WriteLine(roomBasePrice);
+                Console.WriteLine(overOccupancySurcharge);
+                Console.WriteLine(discountPercentage);
+                Console.WriteLine(seasonAdjustmentRate);
+                Console.WriteLine(taxRate);
+                Console.WriteLine(totalPrice);
+            } catch (Exception err)
+            {
+                Console.WriteLine(err);
+                MessageBox.Show(err.Message);
+            }
+            
+        }
     }
 }
