@@ -64,8 +64,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lastNameTextBox = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.addPromoBtn = new System.Windows.Forms.Button();
-            this.promoCodeDropDown = new System.Windows.Forms.ComboBox();
+            this.PromoCodeApplyDiscount = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.GuestSearchResultsDataGridView = new System.Windows.Forms.DataGridView();
             this.GuestSearchBtn = new System.Windows.Forms.Button();
@@ -113,6 +112,8 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteRow = new System.Windows.Forms.ToolStripButton();
             this.button2 = new System.Windows.Forms.Button();
+            this.PromoCodeInput = new System.Windows.Forms.TextBox();
+            this.PromoCodeOutput = new System.Windows.Forms.TextBox();
             this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             emailLabel = new System.Windows.Forms.Label();
@@ -405,7 +406,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(259, 27);
+            this.comboBox1.Location = new System.Drawing.Point(382, 18);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 32);
             this.comboBox1.TabIndex = 13;
@@ -480,12 +481,13 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.PromoCodeOutput);
+            this.groupBox3.Controls.Add(this.GuestSearchResultsDataGridView);
+            this.groupBox3.Controls.Add(this.PromoCodeInput);
             this.groupBox3.Controls.Add(this.lastNameTextBox);
             this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.addPromoBtn);
-            this.groupBox3.Controls.Add(this.promoCodeDropDown);
+            this.groupBox3.Controls.Add(this.PromoCodeApplyDiscount);
             this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.GuestSearchResultsDataGridView);
             this.groupBox3.Controls.Add(this.GuestSearchBtn);
             this.groupBox3.Controls.Add(phoneNumberLabel);
             this.groupBox3.Controls.Add(this.phoneNumberTextBox);
@@ -502,7 +504,7 @@
             // 
             // lastNameTextBox
             // 
-            this.lastNameTextBox.Location = new System.Drawing.Point(222, 76);
+            this.lastNameTextBox.Location = new System.Drawing.Point(220, 81);
             this.lastNameTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.lastNameTextBox.Name = "lastNameTextBox";
             this.lastNameTextBox.Size = new System.Drawing.Size(217, 29);
@@ -518,29 +520,21 @@
             this.label17.TabIndex = 9;
             this.label17.Text = "Last Name";
             // 
-            // addPromoBtn
+            // PromoCodeApplyDiscount
             // 
-            this.addPromoBtn.Location = new System.Drawing.Point(17, 576);
-            this.addPromoBtn.Margin = new System.Windows.Forms.Padding(6);
-            this.addPromoBtn.Name = "addPromoBtn";
-            this.addPromoBtn.Size = new System.Drawing.Size(431, 48);
-            this.addPromoBtn.TabIndex = 8;
-            this.addPromoBtn.Text = "Add Discount";
-            this.addPromoBtn.UseVisualStyleBackColor = true;
-            // 
-            // promoCodeDropDown
-            // 
-            this.promoCodeDropDown.FormattingEnabled = true;
-            this.promoCodeDropDown.Location = new System.Drawing.Point(17, 357);
-            this.promoCodeDropDown.Margin = new System.Windows.Forms.Padding(6);
-            this.promoCodeDropDown.Name = "promoCodeDropDown";
-            this.promoCodeDropDown.Size = new System.Drawing.Size(237, 32);
-            this.promoCodeDropDown.TabIndex = 7;
+            this.PromoCodeApplyDiscount.Location = new System.Drawing.Point(17, 576);
+            this.PromoCodeApplyDiscount.Margin = new System.Windows.Forms.Padding(6);
+            this.PromoCodeApplyDiscount.Name = "PromoCodeApplyDiscount";
+            this.PromoCodeApplyDiscount.Size = new System.Drawing.Size(431, 48);
+            this.PromoCodeApplyDiscount.TabIndex = 8;
+            this.PromoCodeApplyDiscount.Text = "Add Discount";
+            this.PromoCodeApplyDiscount.UseVisualStyleBackColor = true;
+            this.PromoCodeApplyDiscount.Click += new System.EventHandler(this.PromoCodeApplyDiscount_Click);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 313);
+            this.label16.Location = new System.Drawing.Point(15, 445);
             this.label16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(141, 25);
@@ -552,12 +546,12 @@
             this.GuestSearchResultsDataGridView.AllowUserToAddRows = false;
             this.GuestSearchResultsDataGridView.AllowUserToDeleteRows = false;
             this.GuestSearchResultsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GuestSearchResultsDataGridView.Location = new System.Drawing.Point(17, 427);
+            this.GuestSearchResultsDataGridView.Location = new System.Drawing.Point(17, 320);
             this.GuestSearchResultsDataGridView.Margin = new System.Windows.Forms.Padding(6);
             this.GuestSearchResultsDataGridView.Name = "GuestSearchResultsDataGridView";
             this.GuestSearchResultsDataGridView.ReadOnly = true;
             this.GuestSearchResultsDataGridView.RowHeadersWidth = 72;
-            this.GuestSearchResultsDataGridView.Size = new System.Drawing.Size(245, 88);
+            this.GuestSearchResultsDataGridView.Size = new System.Drawing.Size(422, 88);
             this.GuestSearchResultsDataGridView.TabIndex = 5;
             // 
             // GuestSearchBtn
@@ -1023,6 +1017,20 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.RefreshGuestsGrid);
             // 
+            // PromoCodeInput
+            // 
+            this.PromoCodeInput.Location = new System.Drawing.Point(17, 499);
+            this.PromoCodeInput.Name = "PromoCodeInput";
+            this.PromoCodeInput.Size = new System.Drawing.Size(196, 29);
+            this.PromoCodeInput.TabIndex = 12;
+            // 
+            // PromoCodeOutput
+            // 
+            this.PromoCodeOutput.Location = new System.Drawing.Point(249, 499);
+            this.PromoCodeOutput.Name = "PromoCodeOutput";
+            this.PromoCodeOutput.Size = new System.Drawing.Size(188, 29);
+            this.PromoCodeOutput.TabIndex = 13;
+            // 
             // guestBindingSource
             // 
             this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
@@ -1147,19 +1155,20 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button SearchAvailableRoomsBtn;
-        private System.Windows.Forms.ComboBox promoCodeDropDown;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DataGridView GuestSearchResultsDataGridView;
         private System.Windows.Forms.Button createNewBooking;
         private System.Windows.Forms.TextBox lastNameTextBox;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button addPromoBtn;
+        private System.Windows.Forms.Button PromoCodeApplyDiscount;
         private System.Windows.Forms.TextBox checkInPhoneTextBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox SelectedRoomOnBooking;
         private System.Windows.Forms.DateTimePicker CheckOutPicker;
         private System.Windows.Forms.DateTimePicker CheckinDatePicker;
+        private System.Windows.Forms.TextBox PromoCodeInput;
+        private System.Windows.Forms.TextBox PromoCodeOutput;
     }
 }
 

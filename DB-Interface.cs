@@ -60,7 +60,7 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE room(room_id INT IDENTITY PRIMARY KEY, roomtype_id INT, location_id INT, FOREIGN KEY(roomtype_id) REFERENCES room_type(roomtype_id), FOREIGN KEY(location_id) REFERENCES hotel_location(location_id))";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY,promo_code VARCHAR(255) NOT NULL)";
+                cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY, promo_code VARCHAR(255) NOT NULL, discount INT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
 
@@ -139,9 +139,9 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (2, 2, 2, 0, \'20201201\', \'20201215\', 1, 0)";
                 cmd.ExecuteNonQuery();
-
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 1, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (2, 6, 2, 2, \'20201201\', \'20201215\')";
                 cmd.ExecuteNonQuery();
+
                 //and initialize every room with a booking for querying
                 cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 3, 2, 0, \'20200101\', \'20200101\')";
                 cmd.ExecuteNonQuery();
@@ -181,6 +181,11 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
 
 
+                //(promo_id INT IDENTITY PRIMARY KEY, promo_code VARCHAR(255) NOT NULL, discount decimal NOT NULL)";
+                cmd.CommandText = "INSERT INTO promo_code (promo_code, discount) VALUES (\'GOODNIGHT10\', 10)";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "INSERT INTO promo_code (promo_code, discount) VALUES (\'VANCOUVER15\', 15)";
+                cmd.ExecuteNonQuery();
                 Console.WriteLine("Reset Complete.");
             }
             catch (Exception e)
@@ -549,7 +554,7 @@ namespace FinalHotelReservation
                 SqlCommand cmd = new SqlCommand("SELECT description from room_type", con);
 
                 List<string> columnValues = new List<string>();
-                columnValues.Add("All room types");
+                columnValues.Add("All room types"); //default selection
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -571,7 +576,29 @@ namespace FinalHotelReservation
             } 
         }
 
-        
+        public static DataTable RetreiveDiscount(string promoCode)
+        {
+            var con = Open();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * from promo_code WHERE promo_code=@promo_code", con);
+                cmd.Parameters.AddWithValue("@promo_code", promoCode);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
     }
         
 }

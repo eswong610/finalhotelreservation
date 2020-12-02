@@ -400,5 +400,31 @@ namespace FinalHotelReservation
             }
             
         }
+
+        private void PromoCodeApplyDiscount_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string promoCode = PromoCodeInput.Text;
+                DataTable dt = DB.RetreiveDiscount(promoCode);
+                foreach (DataRow row in dt.Rows)
+                {
+                    Console.WriteLine(row[0]);
+                    Console.WriteLine(row[1]);
+                    Console.WriteLine(row[2]);
+
+                    if(row["promo_id"] != null && row["discount"] != null)
+                    {
+                        Console.WriteLine(row["discount"]);
+                        PromoCodeOutput.Text = $"{Convert.ToInt32(row["discount"])}% Discount Applied!";
+                    }
+                }
+
+            } catch (Exception err)
+            {
+                Console.WriteLine(err);
+            }
+
+        }
     }
 }
