@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace FinalHotelReservation
 {
@@ -446,7 +447,15 @@ namespace FinalHotelReservation
         {
             if (AvailableRoomsGridView.SelectedRows.Count > 0 && GuestSearchResultsDataGridView.SelectedRows.Count > 0)
             {
-                MenuNavigate.SelectTab(2);
+                string checkin = CheckinDatePicker.Value.ToString("yyyyMMdd");
+                string checkout = CheckOutPicker.Value.ToString("yyyyMMdd");
+                if (checkin != checkout)
+                {
+                    MenuNavigate.SelectTab(2);
+                } else
+                {
+                    MessageBox.Show("Checkin date and checkout date cannot be the same day.");
+                }
             }
             else
             {
@@ -465,6 +474,11 @@ namespace FinalHotelReservation
                 int numAdditionalAdults = NumAdditionalAdults.Text != "" ? Int32.Parse(NumAdditionalAdults.Text) : 0;
                 int numAdditionalChildren = NumAdditionalChildren.Text != "" ? Int32.Parse(NumAdditionalChildren.Text) : 0;
                 int discountPercentage = Int32.Parse(PromoDiscountPercentage.Text);
+
+                if (checkInDate == checkOutDate)
+                {
+                    throw new Exception("Checkin date and checkout date cannot be the same day.");
+                }
 
                 //var priceList = new BindingList<object>();
                 List<string> priceList = new List<string>();
@@ -498,15 +512,22 @@ namespace FinalHotelReservation
 
 
                 //final price = location tax * (discount * (season price * (base room price + over occupancy surchage)))
-                decimal totalPrice = ((Convert.ToDecimal(taxRate)/ 100 + 1) * ((1 - Convert.ToDecimal(discountPercentage)/ 100) * ((Convert.ToDecimal(seasonAdjustmentRate)/ 100 + 1)) * (roomBasePrice + Convert.ToDecimal(overOccupancySurcharge))));
-                if (totalPrice <= 0)
+                decimal dailyRate = ((Convert.ToDecimal(taxRate)/ 100 + 1) * ((1 - Convert.ToDecimal(discountPercentage)/ 100) * ((Convert.ToDecimal(seasonAdjustmentRate)/ 100 + 1)) * (roomBasePrice + Convert.ToDecimal(overOccupancySurcharge))));
+                if (dailyRate <= 0)
                 {
                     throw new Exception("Invalid Price Calculation Detected.");
                 }
 
-                TotalPriceBox.Text = totalPrice.ToString();
-                priceList.Add($"Total Price: ${totalPrice.ToString()}");
-                
+                priceList.Add($"Daily Rate: ${dailyRate.ToString()}");
+
+                Decimal days = Convert.ToDecimal(DateTime.ParseExact(checkOutDate, "yyyyMMdd", CultureInfo.InvariantCulture).Subtract(DateTime.ParseExact(checkInDate, "yyyyMMdd", CultureInfo.InvariantCulture)).TotalDays);
+
+                Console.WriteLine(days);
+                priceList.Add($"Total Price: ${((days - 1) * dailyRate).ToString()}");
+
+
+                TotalPriceBox.Text = dailyRate.ToString();
+
                 PricingBox.Items.Clear();
                 foreach (string priceLine in priceList)
                 {
@@ -538,6 +559,11 @@ namespace FinalHotelReservation
                 string checkInDate = PricingCheckin.Value.ToString("yyyyMMdd");
                 string checkOutDate = PricingCheckout.Value.ToString("yyyyMMdd");
                 decimal totalPrice = Convert.ToDecimal(TotalPriceBox.Text);
+
+                if (checkInDate == checkOutDate)
+                {
+                    throw new Exception("Checkin date and checkout date cannot be the same day.");
+                }
 
                 //user_id, room_id, num_adults, num_children, check_in_date, check_out_date
                 string result = DB.CreateBooking(userID, roomID, numAdditionalAdults, numAdditionalChildren, checkInDate, checkOutDate);
