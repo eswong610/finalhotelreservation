@@ -766,7 +766,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 25);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Sex";
+            this.label4.Text = "Gender";
             // 
             // newGuestLastName
             // 

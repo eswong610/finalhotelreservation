@@ -33,6 +33,9 @@ namespace FinalHotelReservation
                 SqlCommand cmd = new SqlCommand("DROP TABLE IF EXISTS booking;", con);
                 cmd.ExecuteNonQuery();
 
+                cmd.CommandText = "DROP TABLE IF EXISTS season_pricing;";
+                cmd.ExecuteNonQuery();
+
                 cmd.CommandText = "DROP TABLE IF EXISTS promo_code;";
                 cmd.ExecuteNonQuery();
 
@@ -63,9 +66,9 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE promo_code(promo_id INT IDENTITY PRIMARY KEY, promo_code VARCHAR(255) NOT NULL, discount INT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-
                 cmd.CommandText = "CREATE TABLE booking(booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date, is_checkedin bit, is_checkedout bit, FOREIGN KEY(user_id) REFERENCES users(user_id),FOREIGN KEY(room_id) REFERENCES room(room_id))";
-
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "CREATE TABLE season_pricing(season_period INT IDENTITY PRIMARY KEY, season_name VARCHAR(255), season_start Date NOT NULL, season_end Date NOT NULL, price_factor INT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
                 //users
@@ -73,6 +76,7 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country, telephone) VALUES (\'alice@wong.com\', \'alice\', \'wong\', \'July, 7, 1992\', \'100 zombie valley\', \'san francisco\', \'united states\', \'77898765412\')";
                 cmd.ExecuteNonQuery();
+                
 
                 //roomtypes
                 cmd.CommandText = "INSERT INTO room_type (roomtype_id, description, num_beds, max_occupancy, smoker, room_view, basic_price) VALUES (1, \'studio no view non-smoker\', 1, 2, 0, 0, 60)";
@@ -186,6 +190,12 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "INSERT INTO promo_code (promo_code, discount) VALUES (\'VANCOUVER15\', 15)";
                 cmd.ExecuteNonQuery();
+
+                //season_pricing season_name VARCHAR(255), season_start Date NOT NULL, season_end Date NOT NULL, price_factor INT NOT NULL
+                cmd.CommandText = "INSERT INTO season_price (season_name, season_start, season_end, price_factor) VALUES (\'christmas\', \'20201215\', \'20210102\', 50)";
+                cmd.ExecuteNonQuery();
+
+
                 Console.WriteLine("Reset Complete.");
             }
             catch (Exception e)
