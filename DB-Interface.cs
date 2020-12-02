@@ -439,7 +439,7 @@ namespace FinalHotelReservation
             var con = Open();
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT * from users WHERE phone_number=@phoneNumber", con);
+                SqlCommand cmd = new SqlCommand("SELECT * from users WHERE telephone=@phoneNumber", con);
                 cmd.Parameters.AddWithValue("@phoneNumber", phoneNumber);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();

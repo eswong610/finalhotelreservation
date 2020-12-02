@@ -241,7 +241,7 @@
             this.MenuNavigate.Margin = new System.Windows.Forms.Padding(6);
             this.MenuNavigate.Name = "MenuNavigate";
             this.MenuNavigate.SelectedIndex = 0;
-            this.MenuNavigate.Size = new System.Drawing.Size(1423, 731);
+            this.MenuNavigate.Size = new System.Drawing.Size(1423, 744);
             this.MenuNavigate.TabIndex = 4;
             // 
             // NewGuestTab
@@ -251,7 +251,7 @@
             this.NewGuestTab.Location = new System.Drawing.Point(4, 33);
             this.NewGuestTab.Margin = new System.Windows.Forms.Padding(6);
             this.NewGuestTab.Name = "NewGuestTab";
-            this.NewGuestTab.Size = new System.Drawing.Size(1415, 694);
+            this.NewGuestTab.Size = new System.Drawing.Size(1415, 707);
             this.NewGuestTab.TabIndex = 2;
             this.NewGuestTab.Text = "New Guest";
             this.NewGuestTab.UseVisualStyleBackColor = true;
@@ -524,7 +524,7 @@
             this.NewBookingTab.Margin = new System.Windows.Forms.Padding(6);
             this.NewBookingTab.Name = "NewBookingTab";
             this.NewBookingTab.Padding = new System.Windows.Forms.Padding(6);
-            this.NewBookingTab.Size = new System.Drawing.Size(1415, 694);
+            this.NewBookingTab.Size = new System.Drawing.Size(1415, 707);
             this.NewBookingTab.TabIndex = 1;
             this.NewBookingTab.Text = "New Booking";
             this.NewBookingTab.UseVisualStyleBackColor = true;
@@ -716,7 +716,7 @@
             this.Pricing.Location = new System.Drawing.Point(4, 33);
             this.Pricing.Name = "Pricing";
             this.Pricing.Padding = new System.Windows.Forms.Padding(3);
-            this.Pricing.Size = new System.Drawing.Size(1415, 694);
+            this.Pricing.Size = new System.Drawing.Size(1415, 707);
             this.Pricing.TabIndex = 4;
             this.Pricing.Text = "Pricing";
             this.Pricing.UseVisualStyleBackColor = true;
@@ -892,7 +892,7 @@
             this.CheckInTab.Margin = new System.Windows.Forms.Padding(6);
             this.CheckInTab.Name = "CheckInTab";
             this.CheckInTab.Padding = new System.Windows.Forms.Padding(6);
-            this.CheckInTab.Size = new System.Drawing.Size(1415, 694);
+            this.CheckInTab.Size = new System.Drawing.Size(1415, 707);
             this.CheckInTab.TabIndex = 0;
             this.CheckInTab.Text = "Check - In";
             this.CheckInTab.UseVisualStyleBackColor = true;
@@ -1022,11 +1022,14 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.AllGuestsDataView);
+            this.tabPage1.Controls.Add(this.FilterByIncomingGuests);
+            this.tabPage1.Controls.Add(this.AllGuestsRefreshButton);
+            this.tabPage1.Controls.Add(this.FilterCheckedInOnly);
             this.tabPage1.Controls.Add(this.bindingNavigator1);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1415, 694);
+            this.tabPage1.Size = new System.Drawing.Size(1415, 707);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "All Guests";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1042,7 +1045,7 @@
             this.AllGuestsDataView.Margin = new System.Windows.Forms.Padding(6);
             this.AllGuestsDataView.Name = "AllGuestsDataView";
             this.AllGuestsDataView.RowHeadersWidth = 72;
-            this.AllGuestsDataView.Size = new System.Drawing.Size(1415, 656);
+            this.AllGuestsDataView.Size = new System.Drawing.Size(1415, 669);
             this.AllGuestsDataView.TabIndex = 1;
             this.AllGuestsDataView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -1188,9 +1191,9 @@
             // 
             // FilterCheckedInOnly
             // 
-            this.FilterCheckedInOnly.Location = new System.Drawing.Point(485, 871);
+            this.FilterCheckedInOnly.Location = new System.Drawing.Point(863, 0);
             this.FilterCheckedInOnly.Name = "FilterCheckedInOnly";
-            this.FilterCheckedInOnly.Size = new System.Drawing.Size(333, 47);
+            this.FilterCheckedInOnly.Size = new System.Drawing.Size(255, 38);
             this.FilterCheckedInOnly.TabIndex = 5;
             this.FilterCheckedInOnly.Text = "Filter By Checked-in Only";
             this.FilterCheckedInOnly.UseVisualStyleBackColor = true;
@@ -1198,9 +1201,9 @@
             // 
             // FilterByIncomingGuests
             // 
-            this.FilterByIncomingGuests.Location = new System.Drawing.Point(918, 871);
+            this.FilterByIncomingGuests.Location = new System.Drawing.Point(1140, 0);
             this.FilterByIncomingGuests.Name = "FilterByIncomingGuests";
-            this.FilterByIncomingGuests.Size = new System.Drawing.Size(297, 47);
+            this.FilterByIncomingGuests.Size = new System.Drawing.Size(254, 38);
             this.FilterByIncomingGuests.TabIndex = 6;
             this.FilterByIncomingGuests.Text = "Filter By Incoming Guests";
             this.FilterByIncomingGuests.UseVisualStyleBackColor = true;
@@ -1208,9 +1211,9 @@
             // 
             // AllGuestsRefreshButton
             // 
-            this.AllGuestsRefreshButton.Location = new System.Drawing.Point(80, 871);
+            this.AllGuestsRefreshButton.Location = new System.Drawing.Point(709, 0);
             this.AllGuestsRefreshButton.Name = "AllGuestsRefreshButton";
-            this.AllGuestsRefreshButton.Size = new System.Drawing.Size(309, 47);
+            this.AllGuestsRefreshButton.Size = new System.Drawing.Size(122, 38);
             this.AllGuestsRefreshButton.TabIndex = 7;
             this.AllGuestsRefreshButton.Text = "All Guests";
             this.AllGuestsRefreshButton.UseVisualStyleBackColor = true;
@@ -1229,9 +1232,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1465, 947);
-            this.Controls.Add(this.AllGuestsRefreshButton);
-            this.Controls.Add(this.FilterByIncomingGuests);
-            this.Controls.Add(this.FilterCheckedInOnly);
             this.Controls.Add(this.MenuNavigate);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button1);
