@@ -271,6 +271,10 @@ namespace FinalHotelReservation
 
             var row = AvailableRoomsGridView.SelectedRows[0];
             if (row == null) return;
+            RoomIDBox.Text = AvailableRoomsGridView.SelectedRows[0].Cells["room_id"].Value.ToString();
+            SelectedRoomType.Text = AvailableRoomsGridView.SelectedRows[0].Cells["description"].Value.ToString();
+            PricingCheckin.Text = CheckinDatePicker.Text;
+            PricingCheckout.Text = CheckOutPicker.Text;
             UpdateRoomSelectedOnBookingScreen(row);
         }
 
@@ -423,5 +427,11 @@ namespace FinalHotelReservation
             }
 
         }
+
+        private void createNewBooking_Click(object sender, EventArgs e)
+        {
+            
+        }
+
     }
 }
