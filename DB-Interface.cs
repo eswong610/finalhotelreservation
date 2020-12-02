@@ -449,12 +449,12 @@ namespace FinalHotelReservation
             {
                 SqlCommand cmd;
 
-                cmd = new SqlCommand("SELECT booking.booking_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout FROM booking WHERE booking.user_id IN (SELECT user_id FROM users WHERE first_name = @firstName OR last_name = @lastName OR telephone = @phoneNumber)", con);
+                cmd = new SqlCommand("SELECT booking.booking_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout FROM booking WHERE booking.user_id IN (SELECT user_id FROM users WHERE first_name LIKE @firstName AND last_name LIKE @lastName AND telephone LIKE @phoneNumber)", con);
                 //cmd = new SqlCommand("SELECT booking.booking_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout FROM booking WHERE booking.user_id IN (SELECT user_id FROM users WHERE first_name LIKE ISNULL (@firstName, first_name) AND last_name LIKE ISNULL (@lastName, last_name) AND telephone LIKE ISNULL (@phoneNumber, telephone))", con);
 
-                cmd.Parameters.AddWithValue("@lastName", (object)lastName ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@phoneNumber", (object)phoneNumber ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@firstName", (object)firstName ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@lastName", $"%{lastName}%");
+                cmd.Parameters.AddWithValue("@phoneNumber", $"%{phoneNumber}%");
+                cmd.Parameters.AddWithValue("@firstName", $"%{firstName}%");//(object)firstName ?? DBNull.Value);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
