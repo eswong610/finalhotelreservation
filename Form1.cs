@@ -576,5 +576,20 @@ namespace FinalHotelReservation
                 MessageBox.Show(err.Message);
             }
         }
+
+        private void FilterCheckedInOnly_Click(object sender, EventArgs e)
+        {
+            AllGuestsDataView.DataSource = DB.RetreiveUser("checkedin-only");
+        }
+
+        private void AllGuestsRefreshButton_Click(object sender, EventArgs e)
+        {           
+            AllGuestsDataView.DataSource = DB.RetreiveUser();
+        }
+
+        private void FilterByIncomingGuests_Click(object sender, EventArgs e)
+        {
+            AllGuestsDataView.DataSource = DB.RetreiveUser("incoming-guests");
+        }
     }
 }

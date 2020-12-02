@@ -128,6 +128,9 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteRow = new System.Windows.Forms.ToolStripButton();
             this.ConfirmBookingBtn = new System.Windows.Forms.Button();
+            this.FilterCheckedInOnly = new System.Windows.Forms.Button();
+            this.FilterByIncomingGuests = new System.Windows.Forms.Button();
+            this.AllGuestsRefreshButton = new System.Windows.Forms.Button();
             this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             emailLabel = new System.Windows.Forms.Label();
@@ -1183,6 +1186,36 @@
             this.ConfirmBookingBtn.UseVisualStyleBackColor = true;
             this.ConfirmBookingBtn.Click += new System.EventHandler(this.ConfirmBookingBtn_Click);
             // 
+            // FilterCheckedInOnly
+            // 
+            this.FilterCheckedInOnly.Location = new System.Drawing.Point(485, 871);
+            this.FilterCheckedInOnly.Name = "FilterCheckedInOnly";
+            this.FilterCheckedInOnly.Size = new System.Drawing.Size(333, 47);
+            this.FilterCheckedInOnly.TabIndex = 5;
+            this.FilterCheckedInOnly.Text = "Filter By Checked-in Only";
+            this.FilterCheckedInOnly.UseVisualStyleBackColor = true;
+            this.FilterCheckedInOnly.Click += new System.EventHandler(this.FilterCheckedInOnly_Click);
+            // 
+            // FilterByIncomingGuests
+            // 
+            this.FilterByIncomingGuests.Location = new System.Drawing.Point(918, 871);
+            this.FilterByIncomingGuests.Name = "FilterByIncomingGuests";
+            this.FilterByIncomingGuests.Size = new System.Drawing.Size(297, 47);
+            this.FilterByIncomingGuests.TabIndex = 6;
+            this.FilterByIncomingGuests.Text = "Filter By Incoming Guests";
+            this.FilterByIncomingGuests.UseVisualStyleBackColor = true;
+            this.FilterByIncomingGuests.Click += new System.EventHandler(this.FilterByIncomingGuests_Click);
+            // 
+            // AllGuestsRefreshButton
+            // 
+            this.AllGuestsRefreshButton.Location = new System.Drawing.Point(80, 871);
+            this.AllGuestsRefreshButton.Name = "AllGuestsRefreshButton";
+            this.AllGuestsRefreshButton.Size = new System.Drawing.Size(309, 47);
+            this.AllGuestsRefreshButton.TabIndex = 7;
+            this.AllGuestsRefreshButton.Text = "All Guests";
+            this.AllGuestsRefreshButton.UseVisualStyleBackColor = true;
+            this.AllGuestsRefreshButton.Click += new System.EventHandler(this.AllGuestsRefreshButton_Click);
+            // 
             // guestBindingSource
             // 
             this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
@@ -1196,6 +1229,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1465, 947);
+            this.Controls.Add(this.AllGuestsRefreshButton);
+            this.Controls.Add(this.FilterByIncomingGuests);
+            this.Controls.Add(this.FilterCheckedInOnly);
             this.Controls.Add(this.MenuNavigate);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button1);
@@ -1336,6 +1372,9 @@
         private System.Windows.Forms.TextBox TotalPriceBox;
         private System.Windows.Forms.TextBox EmailSearchTextBox;
         private System.Windows.Forms.Button ConfirmBookingBtn;
+        private System.Windows.Forms.Button FilterCheckedInOnly;
+        private System.Windows.Forms.Button FilterByIncomingGuests;
+        private System.Windows.Forms.Button AllGuestsRefreshButton;
     }
 }
 

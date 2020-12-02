@@ -76,7 +76,8 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country, telephone) VALUES (\'alice@wong.com\', \'alice\', \'wong\', \'July, 7, 1992\', \'100 zombie valley\', \'san francisco\', \'united states\', \'77898765412\')";
                 cmd.ExecuteNonQuery();
-                
+                cmd.CommandText = "INSERT INTO users (email, first_name, last_name, birth_date, address, city, country, telephone) VALUES (\'jane@chang.com\', \'jane\', \'chang\', \'January, 17, 1986\', \'300 bcit ave\', \'vancouver\', \'canada\', \'6041237894\')";
+                cmd.ExecuteNonQuery();
 
                 //roomtypes
                 cmd.CommandText = "INSERT INTO room_type (roomtype_id, description, num_beds, max_occupancy, smoker, room_view, basic_price) VALUES (1, \'studio no view non-smoker\', 1, 2, 0, 0, 60)";
@@ -139,49 +140,49 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
 
                 //bookings (booking_id INT IDENTITY PRIMARY KEY,user_id int NOT NULL,room_id int NOT NULL,num_adults INT,num_children INT,check_in_date Date,check_out_date Date)
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 1, 2, 0, \'20201201\', \'20201215\', 0, 0)";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 1, 2, 0, \'20201201\', \'20201215\', 1, 0)";
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (2, 2, 2, 0, \'20201201\', \'20201215\', 1, 0)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (2, 6, 2, 2, \'20201201\', \'20201215\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (3, 6, 2, 2, \'20201215\', \'20201230\', 0, 0)";
                 cmd.ExecuteNonQuery();
 
                 //and initialize every room with a booking for querying
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 3, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 3, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 4, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 4, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 5, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 5, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 6, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 6, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 7, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 7, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 8, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 8, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 9, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 9, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 10, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 10, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 11, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 11, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 12, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 12, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 13, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 13, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 14, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 14, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 15, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 15, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 16, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 16, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 17, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 17, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 18, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 18, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 19, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 19, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (1, 20, 2, 0, \'20200101\', \'20200101\')";
+                cmd.CommandText = "INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (1, 20, 2, 0, \'20200101\', \'20200101\', 1, 1)";
                 cmd.ExecuteNonQuery();
 
 
@@ -256,20 +257,52 @@ namespace FinalHotelReservation
             var con = Open();
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM users", con);
+                var monthAgo = DateTime.Now.AddDays(-30).ToString("yyyyMMdd");
+                SqlCommand cmd = new SqlCommand("SELECT * FROM users JOIN booking ON users.user_id=booking.user_id WHERE booking_id NOT IN (SELECT booking_id FROM users JOIN booking ON users.user_id=booking.user_id WHERE check_in_date < @monthAgo AND is_checkedin=0 OR check_out_date < @monthAgo AND is_checkedout=1)", con);
+                cmd.Parameters.AddWithValue("@monthAgo", monthAgo);
 
-                //SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
-                //while (reader.Read())
-                //{
-                //    Console.WriteLine(reader);
-                //    ReadSingleRow((IDataRecord)reader);
+        public static DataTable RetreiveUser(string options)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = null;
+                if (options == "checkedin-only")
+                {
+                    cmd = new SqlCommand("SELECT * FROM users JOIN booking ON users.user_id=booking.user_id WHERE is_checkedin=@is_checkedin AND is_checkedout=@is_checkedout", con);
+                    cmd.Parameters.AddWithValue("@is_checkedin", 1);
+                    cmd.Parameters.AddWithValue("@is_checkedout", 0);
 
-                //    //Console.WriteLine(String.Format("{0}, {1}", reader.GetInt32(0), reader.GetString(1)));
-                //}
+                } else if (options == "incoming-guests")
+                {
+                    var currentDate = DateTime.Now.ToString("yyyyMMdd");
+                    cmd = new SqlCommand("SELECT * FROM users JOIN booking ON users.user_id=booking.user_id WHERE check_in_date > @currentDate", con);
+                    cmd.Parameters.AddWithValue("@currentDate", currentDate);
+                } else
+                {
+                    throw new Exception("Please provide valid options.");
+                }
 
-                //reader.Close();
-
+                if (cmd == null)
+                {
+                    throw new Exception("CMD null. Check RetreiveUser.");
+                }
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
