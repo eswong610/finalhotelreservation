@@ -210,7 +210,7 @@ namespace FinalHotelReservation
 
 
 
-        public static void CreateUser(string email, string firstName, string lastName, string birthDate, string address, string city, string country, string phoneNumber)
+        public static string CreateUser(string email, string firstName, string lastName, string birthDate, string address, string city, string country, string phoneNumber)
         {
             var con = Open();
             try
@@ -225,6 +225,7 @@ namespace FinalHotelReservation
                 cmd.Parameters.AddWithValue("@country", country);
                 cmd.Parameters.AddWithValue("@telephone", phoneNumber);
                 cmd.ExecuteNonQuery();
+                return "User created successfully.";
             }
             catch (Exception e)
             {
@@ -346,6 +347,80 @@ namespace FinalHotelReservation
             {
                 Console.WriteLine(e);
                 throw e;
+            } finally
+            {
+                con.Close();
+            }
+        }
+
+        public static DataTable RetreiveUserByEmail (string email)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * from users WHERE email=@email", con);
+                cmd.Parameters.AddWithValue("@email", email);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static DataTable RetreiveUserByFirstLastName (string firstName, string lastName)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * from users WHERE first_name=@firstName AND last_name=@lastName", con);
+                cmd.Parameters.AddWithValue("@firstName", firstName);
+                cmd.Parameters.AddWithValue("@lastName", lastName);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static DataTable RetreiveUserByPhoneNumber(string phoneNumber)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * from users WHERE phone_number=@phoneNumber", con);
+                cmd.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
@@ -431,6 +506,10 @@ namespace FinalHotelReservation
             {
                 Console.WriteLine(e);
                 throw e;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
@@ -557,6 +636,31 @@ namespace FinalHotelReservation
         //        con.Close();
         //    }
         //}
+
+        public static string CreateBooking(string userID, int roomID, int numAdults, int numChildren, string checkInDate, string checkOutDate)
+        {
+            var con = Open();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (@userID, @roomID, @numAdults, @numChildren, @checkInDate, @checkOutDate)", con);
+                cmd.Parameters.AddWithValue("@userID", userID);
+                cmd.Parameters.AddWithValue("@roomID", roomID);
+                cmd.Parameters.AddWithValue("@numAdults", numAdults);
+                cmd.Parameters.AddWithValue("@numChildren", numChildren);
+                cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                cmd.ExecuteNonQuery();
+                return "Booking created successfully.";
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+                throw err;
+            } finally
+            {
+                con.Close();
+            }
+        }
 
         public static string UpdateBooking(int bookingId, string updateValue)
         {

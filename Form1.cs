@@ -67,7 +67,9 @@ namespace FinalHotelReservation
                 string address = newGuestAddress.Text;
                 string city = newGuestCity.Text;
                 string country = newGuestCountry.Text;
-                DB.CreateUser(email, firstName, lastName, birthDate, address, city, country, phoneNumber);
+                string result = DB.CreateUser(email, firstName, lastName, birthDate, address, city, country, phoneNumber);
+                Console.WriteLine(result);
+                MessageBox.Show(result);
             }
             catch (Exception err)
             {
@@ -223,11 +225,33 @@ namespace FinalHotelReservation
 
         private void GuestSearchBtn_Click(object sender, EventArgs e)
         {
-            string guestEmail = firstNameTextBox.Text;
-            string guestPhone = phoneNumberTextBox.Text;
+            string email = EmailSearchTextBox.Text;
+            string firstName = FirstNameSearch.Text;
+            string lastName = LastNameSearch.Text;
+            string phoneNumber = PhoneNumberSearch.Text;
 
-            Entity.Guest dbGuest = dbContext.Guests.Where(x => x.Email == guestEmail && x.PhoneNumber == guestPhone).FirstOrDefault();
-            MessageBox.Show(dbGuest.FirstName);
+            DataTable dt = null;
+
+            if (email != "")
+            {
+                dt = DB.RetreiveUserByEmail(email);
+            } else if (firstName != "" && lastName != "")
+            {
+                dt = DB.RetreiveUserByFirstLastName(firstName, lastName);
+            } else if (phoneNumber != "")
+            {
+                dt = DB.RetreiveUserByPhoneNumber(phoneNumber);
+            } else
+            {
+                MessageBox.Show("Please enter valid search criteria.");
+            }
+            if(dt != null)
+            {
+                GuestSearchResultsDataGridView.DataSource = dt;
+            } else
+            {
+                MessageBox.Show("Please enter valid search criteria.");
+            }
         }
 
         private void newGuestLastName_TextChanged(object sender, EventArgs e)
@@ -243,20 +267,6 @@ namespace FinalHotelReservation
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void RefreshGuestsGrid(object sender, EventArgs e)
-        {
-            //DataTable dt = DB.RetreiveUser();
-            //AllGuestsDataView.DataSource = dt;
-            //or
-            //List<string> row = DB.RetreiveUserAsList("joe@smith.com");
-            //foreach (var column in row)
-            //{
-            //    Console.WriteLine(column);
-            //}
-
-            DB.RetreiveRoomDescriptions();
         }
 
         private void groupBox4_Enter(object sender, EventArgs e)
@@ -448,6 +458,7 @@ namespace FinalHotelReservation
         {
             try
             {
+                
                 int roomID = Int32.Parse(RoomIDBox.Text);
                 string checkInDate = PricingCheckin.Value.ToString("yyyyMMdd");
                 string checkOutDate = PricingCheckout.Value.ToString("yyyyMMdd");
@@ -455,8 +466,8 @@ namespace FinalHotelReservation
                 int numAdditionalChildren = NumAdditionalChildren.Text != "" ? Int32.Parse(NumAdditionalChildren.Text) : 0;
                 int discountPercentage = Int32.Parse(PromoDiscountPercentage.Text);
 
-                Console.WriteLine(numAdditionalAdults);
-
+                //var priceList = new BindingList<object>();
+                List<string> priceList = new List<string>();
 
                 int totalGuests = 1 + numAdditionalAdults + numAdditionalChildren;
                 int roomOccupancy = 1;
@@ -469,19 +480,22 @@ namespace FinalHotelReservation
                 {
                     roomOccupancy = Convert.ToInt32(row["max_occupancy"]);
                     roomBasePrice = Convert.ToDecimal((row["basic_price"]).ToString());
+                    priceList.Add($"Base price: ${roomBasePrice.ToString()}");
                     taxRate = Convert.ToInt32(row["tax_Rate"]);
-
-                    Console.WriteLine(roomOccupancy);
                 }
                 int SURCHARGE_RATE_PER_PERSON = 15; //$15 per person
                 int overOccupancySurcharge = totalGuests > roomOccupancy ? (totalGuests - roomOccupancy) * SURCHARGE_RATE_PER_PERSON : 0;
-
+                priceList.Add($"Over occupancy surcharge: ${overOccupancySurcharge.ToString()}");
                 //check for season price adjustment
                 int seasonAdjustmentRate = DB.RetreiveSeasonAdjustmentRate(checkInDate, checkOutDate);
                 if(seasonAdjustmentRate < 0)
                 {
                     seasonAdjustmentRate = 0;
                 }
+                priceList.Add($"Seasonal Adjustment Rate: {seasonAdjustmentRate.ToString()}%");
+                priceList.Add($"Promo Discount: {discountPercentage.ToString()}%");
+                priceList.Add($"Regional Tax Rate: {taxRate.ToString()}%");
+
 
                 //final price = location tax * (discount * (season price * (base room price + over occupancy surchage)))
                 decimal totalPrice = ((Convert.ToDecimal(taxRate)/ 100 + 1) * ((1 - Convert.ToDecimal(discountPercentage)/ 100) * ((Convert.ToDecimal(seasonAdjustmentRate)/ 100 + 1)) * (roomBasePrice + Convert.ToDecimal(overOccupancySurcharge))));
@@ -489,18 +503,52 @@ namespace FinalHotelReservation
                 {
                     throw new Exception("Invalid Price Calculation Detected.");
                 }
-                Console.WriteLine(roomBasePrice);
-                Console.WriteLine(overOccupancySurcharge);
-                Console.WriteLine(discountPercentage);
-                Console.WriteLine(seasonAdjustmentRate);
-                Console.WriteLine(taxRate);
-                Console.WriteLine(totalPrice);
+
+                TotalPriceBox.Text = totalPrice.ToString();
+                priceList.Add($"Total Price: ${totalPrice.ToString()}");
+                
+                PricingBox.Items.Clear();
+                foreach (string priceLine in priceList)
+                {
+                    PricingBox.Items.Add(priceLine);
+                }
+                //var source = new BindingSource(priceList, null);
+                //PricingGrid.DataSource = source;
             } catch (Exception err)
             {
                 Console.WriteLine(err);
                 MessageBox.Show(err.Message);
             }
             
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConfirmBookingBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string userID = GuestSearchResultsDataGridView.SelectedRows[0].Cells["user_id"].Value.ToString();
+                int roomID = Int32.Parse(RoomIDBox.Text);
+                int numAdditionalAdults = NumAdditionalAdults.Text != "" ? Int32.Parse(NumAdditionalAdults.Text) : 0;
+                int numAdditionalChildren = NumAdditionalChildren.Text != "" ? Int32.Parse(NumAdditionalChildren.Text) : 0;
+                string checkInDate = PricingCheckin.Value.ToString("yyyyMMdd");
+                string checkOutDate = PricingCheckout.Value.ToString("yyyyMMdd");
+                decimal totalPrice = Convert.ToDecimal(TotalPriceBox.Text);
+
+                //user_id, room_id, num_adults, num_children, check_in_date, check_out_date
+                string result = DB.CreateBooking(userID, roomID, numAdditionalAdults, numAdditionalChildren, checkInDate, checkOutDate);
+                Console.WriteLine(result);
+                MessageBox.Show(result);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+                MessageBox.Show(err.Message);
+            }
         }
     }
 }
