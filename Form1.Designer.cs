@@ -42,9 +42,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.SearchBookingsGridView = new System.Windows.Forms.DataGridView();
             this.checkOutBtn = new System.Windows.Forms.Button();
             this.checkInBtn = new System.Windows.Forms.Button();
-            this.SearchBookingsGridView = new System.Windows.Forms.DataGridView();
             this.CheckinLastNameTextBox = new System.Windows.Forms.TextBox();
             this.CheckinFirstName = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -214,7 +214,9 @@
             // CheckInTab
             // 
             this.CheckInTab.Controls.Add(this.checkInPhoneTextBox);
+            this.CheckInTab.Controls.Add(this.checkOutBtn);
             this.CheckInTab.Controls.Add(this.label18);
+            this.CheckInTab.Controls.Add(this.checkInBtn);
             this.CheckInTab.Controls.Add(this.button5);
             this.CheckInTab.Controls.Add(this.groupBox5);
             this.CheckInTab.Controls.Add(this.CheckinLastNameTextBox);
@@ -264,20 +266,30 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.SearchBookingsGridView);
-            this.groupBox5.Controls.Add(this.checkOutBtn);
-            this.groupBox5.Controls.Add(this.checkInBtn);
-            this.groupBox5.Location = new System.Drawing.Point(352, 21);
+            this.groupBox5.Location = new System.Drawing.Point(644, 30);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox5.Size = new System.Drawing.Size(406, 333);
+            this.groupBox5.Size = new System.Drawing.Size(734, 533);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Booking";
             // 
+            // SearchBookingsGridView
+            // 
+            this.SearchBookingsGridView.AllowUserToAddRows = false;
+            this.SearchBookingsGridView.AllowUserToDeleteRows = false;
+            this.SearchBookingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SearchBookingsGridView.Location = new System.Drawing.Point(0, 26);
+            this.SearchBookingsGridView.Name = "SearchBookingsGridView";
+            this.SearchBookingsGridView.ReadOnly = true;
+            this.SearchBookingsGridView.RowHeadersWidth = 72;
+            this.SearchBookingsGridView.Size = new System.Drawing.Size(730, 507);
+            this.SearchBookingsGridView.TabIndex = 2;
+            // 
             // checkOutBtn
             // 
-            this.checkOutBtn.Location = new System.Drawing.Point(252, 290);
+            this.checkOutBtn.Location = new System.Drawing.Point(1164, 617);
             this.checkOutBtn.Margin = new System.Windows.Forms.Padding(6);
             this.checkOutBtn.Name = "checkOutBtn";
             this.checkOutBtn.Size = new System.Drawing.Size(124, 43);
@@ -288,7 +300,7 @@
             // 
             // checkInBtn
             // 
-            this.checkInBtn.Location = new System.Drawing.Point(31, 290);
+            this.checkInBtn.Location = new System.Drawing.Point(733, 617);
             this.checkInBtn.Margin = new System.Windows.Forms.Padding(6);
             this.checkInBtn.Name = "checkInBtn";
             this.checkInBtn.Size = new System.Drawing.Size(126, 43);
@@ -296,18 +308,6 @@
             this.checkInBtn.Text = "Check In";
             this.checkInBtn.UseVisualStyleBackColor = true;
             this.checkInBtn.Click += new System.EventHandler(this.checkInBtn_Click);
-            // 
-            // SearchBookingsGridView
-            // 
-            this.SearchBookingsGridView.AllowUserToAddRows = false;
-            this.SearchBookingsGridView.AllowUserToDeleteRows = false;
-            this.SearchBookingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SearchBookingsGridView.Location = new System.Drawing.Point(4, 22);
-            this.SearchBookingsGridView.Name = "SearchBookingsGridView";
-            this.SearchBookingsGridView.ReadOnly = true;
-            this.SearchBookingsGridView.RowHeadersWidth = 72;
-            this.SearchBookingsGridView.Size = new System.Drawing.Size(402, 259);
-            this.SearchBookingsGridView.TabIndex = 2;
             // 
             // CheckinLastNameTextBox
             // 
