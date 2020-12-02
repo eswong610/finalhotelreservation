@@ -57,7 +57,7 @@ namespace FinalHotelReservation
                 cmd.CommandText = "CREATE TABLE room_type(roomtype_id INT NOT NULL PRIMARY KEY, description VARCHAR(255), num_beds INT,max_occupancy INT,smoker bit,room_view bit,basic_price decimal)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "CREATE TABLE hotel_location(location_id INT NOT NULL PRIMARY KEY, city_name VARCHAR(255) NOT NULL,country VARCHAR(255) NOT NULL,location_address VARCHAR(255) NOT NULL)";
+                cmd.CommandText = "CREATE TABLE hotel_location(location_id INT NOT NULL PRIMARY KEY, city_name VARCHAR(255) NOT NULL,country VARCHAR(255) NOT NULL,location_address VARCHAR(255) NOT NULL, tax_rate INT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "CREATE TABLE room(room_id INT IDENTITY PRIMARY KEY, roomtype_id INT, location_id INT, FOREIGN KEY(roomtype_id) REFERENCES room_type(roomtype_id), FOREIGN KEY(location_id) REFERENCES hotel_location(location_id))";
@@ -93,7 +93,7 @@ namespace FinalHotelReservation
                 cmd.ExecuteNonQuery();
 
                 //location
-                cmd.CommandText = "INSERT INTO hotel_location (location_id, city_name, country, location_address) VALUES (1, \'vancouver\', \'canada\', \'888 waterfront st.\')";
+                cmd.CommandText = "INSERT INTO hotel_location (location_id, city_name, country, location_address, tax_rate) VALUES (1, \'vancouver\', \'canada\', \'888 waterfront st.\', 12)";
                 cmd.ExecuteNonQuery();
 
                 //rooms
@@ -609,6 +609,7 @@ namespace FinalHotelReservation
             }
 
         }
+
     }
         
 }
