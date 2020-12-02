@@ -54,21 +54,14 @@
             this.CheckOutPicker = new System.Windows.Forms.DateTimePicker();
             this.CheckinDatePicker = new System.Windows.Forms.DateTimePicker();
             this.SelectedRoomOnBooking = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.createNewBooking = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.SearchAvailableRoomsBtn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.AvailableRoomsGridView = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.PromoCodeOutput = new System.Windows.Forms.TextBox();
             this.GuestSearchResultsDataGridView = new System.Windows.Forms.DataGridView();
-            this.PromoCodeInput = new System.Windows.Forms.TextBox();
             this.lastNameTextBox = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.PromoCodeApplyDiscount = new System.Windows.Forms.Button();
-            this.label16 = new System.Windows.Forms.Label();
             this.GuestSearchBtn = new System.Windows.Forms.Button();
             this.phoneNumberTextBox = new System.Windows.Forms.TextBox();
             this.firstNameTextBox = new System.Windows.Forms.TextBox();
@@ -114,6 +107,13 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteRow = new System.Windows.Forms.ToolStripButton();
             this.button2 = new System.Windows.Forms.Button();
+            this.Pricing = new System.Windows.Forms.TabPage();
+            this.BookingPricing = new System.Windows.Forms.GroupBox();
+            this.PricingGrid = new System.Windows.Forms.DataGridView();
+            this.PromoCodeOutput = new System.Windows.Forms.TextBox();
+            this.PromoCodeInput = new System.Windows.Forms.TextBox();
+            this.PromoCodeApplyDiscount = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
             this.guestBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.guestBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             emailLabel = new System.Windows.Forms.Label();
@@ -136,6 +136,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            this.Pricing.SuspendLayout();
+            this.BookingPricing.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PricingGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -195,7 +198,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(11, 22);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(11, 4, 0, 4);
-            this.menuStrip1.Size = new System.Drawing.Size(202, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(352, 42);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -203,6 +206,7 @@
             // 
             this.MenuNavigate.Controls.Add(this.NewGuestTab);
             this.MenuNavigate.Controls.Add(this.NewBookingTab);
+            this.MenuNavigate.Controls.Add(this.Pricing);
             this.MenuNavigate.Controls.Add(this.CheckInTab);
             this.MenuNavigate.Controls.Add(this.tabPage1);
             this.MenuNavigate.Location = new System.Drawing.Point(22, 87);
@@ -361,10 +365,7 @@
             this.NewBookingTab.Controls.Add(this.CheckOutPicker);
             this.NewBookingTab.Controls.Add(this.CheckinDatePicker);
             this.NewBookingTab.Controls.Add(this.SelectedRoomOnBooking);
-            this.NewBookingTab.Controls.Add(this.comboBox1);
             this.NewBookingTab.Controls.Add(this.createNewBooking);
-            this.NewBookingTab.Controls.Add(this.label15);
-            this.NewBookingTab.Controls.Add(this.label14);
             this.NewBookingTab.Controls.Add(this.SearchAvailableRoomsBtn);
             this.NewBookingTab.Controls.Add(RoomType);
             this.NewBookingTab.Controls.Add(this.groupBox4);
@@ -403,14 +404,6 @@
             this.SelectedRoomOnBooking.TabIndex = 14;
             this.SelectedRoomOnBooking.SelectedIndexChanged += new System.EventHandler(this.SelectedRoomOnBooking_SelectedIndexChanged);
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(382, 18);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 32);
-            this.comboBox1.TabIndex = 13;
-            // 
             // createNewBooking
             // 
             this.createNewBooking.Location = new System.Drawing.Point(512, 622);
@@ -420,26 +413,6 @@
             this.createNewBooking.TabIndex = 12;
             this.createNewBooking.Text = "Create New Booking";
             this.createNewBooking.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(530, 25);
-            this.label15.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(106, 25);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "Check Out";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(283, 25);
-            this.label14.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(90, 25);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Check In";
             // 
             // SearchAvailableRoomsBtn
             // 
@@ -481,13 +454,9 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.PromoCodeOutput);
             this.groupBox3.Controls.Add(this.GuestSearchResultsDataGridView);
-            this.groupBox3.Controls.Add(this.PromoCodeInput);
             this.groupBox3.Controls.Add(this.lastNameTextBox);
             this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.PromoCodeApplyDiscount);
-            this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.GuestSearchBtn);
             this.groupBox3.Controls.Add(phoneNumberLabel);
             this.groupBox3.Controls.Add(this.phoneNumberTextBox);
@@ -502,13 +471,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Guest Information";
             // 
-            // PromoCodeOutput
-            // 
-            this.PromoCodeOutput.Location = new System.Drawing.Point(249, 499);
-            this.PromoCodeOutput.Name = "PromoCodeOutput";
-            this.PromoCodeOutput.Size = new System.Drawing.Size(188, 29);
-            this.PromoCodeOutput.TabIndex = 13;
-            // 
             // GuestSearchResultsDataGridView
             // 
             this.GuestSearchResultsDataGridView.AllowUserToAddRows = false;
@@ -521,13 +483,6 @@
             this.GuestSearchResultsDataGridView.RowHeadersWidth = 72;
             this.GuestSearchResultsDataGridView.Size = new System.Drawing.Size(422, 88);
             this.GuestSearchResultsDataGridView.TabIndex = 5;
-            // 
-            // PromoCodeInput
-            // 
-            this.PromoCodeInput.Location = new System.Drawing.Point(17, 499);
-            this.PromoCodeInput.Name = "PromoCodeInput";
-            this.PromoCodeInput.Size = new System.Drawing.Size(196, 29);
-            this.PromoCodeInput.TabIndex = 12;
             // 
             // lastNameTextBox
             // 
@@ -546,27 +501,6 @@
             this.label17.Size = new System.Drawing.Size(106, 25);
             this.label17.TabIndex = 9;
             this.label17.Text = "Last Name";
-            // 
-            // PromoCodeApplyDiscount
-            // 
-            this.PromoCodeApplyDiscount.Location = new System.Drawing.Point(17, 576);
-            this.PromoCodeApplyDiscount.Margin = new System.Windows.Forms.Padding(6);
-            this.PromoCodeApplyDiscount.Name = "PromoCodeApplyDiscount";
-            this.PromoCodeApplyDiscount.Size = new System.Drawing.Size(431, 48);
-            this.PromoCodeApplyDiscount.TabIndex = 8;
-            this.PromoCodeApplyDiscount.Text = "Add Discount";
-            this.PromoCodeApplyDiscount.UseVisualStyleBackColor = true;
-            this.PromoCodeApplyDiscount.Click += new System.EventHandler(this.PromoCodeApplyDiscount_Click);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 445);
-            this.label16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(141, 25);
-            this.label16.TabIndex = 6;
-            this.label16.Text = "Add Promotion";
             // 
             // GuestSearchBtn
             // 
@@ -1031,6 +965,76 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.RefreshGuestsGrid);
             // 
+            // Pricing
+            // 
+            this.Pricing.Controls.Add(this.PromoCodeOutput);
+            this.Pricing.Controls.Add(this.PromoCodeInput);
+            this.Pricing.Controls.Add(this.PromoCodeApplyDiscount);
+            this.Pricing.Controls.Add(this.label16);
+            this.Pricing.Controls.Add(this.BookingPricing);
+            this.Pricing.Location = new System.Drawing.Point(4, 33);
+            this.Pricing.Name = "Pricing";
+            this.Pricing.Padding = new System.Windows.Forms.Padding(3);
+            this.Pricing.Size = new System.Drawing.Size(1415, 694);
+            this.Pricing.TabIndex = 4;
+            this.Pricing.Text = "Pricing";
+            this.Pricing.UseVisualStyleBackColor = true;
+            // 
+            // BookingPricing
+            // 
+            this.BookingPricing.Controls.Add(this.PricingGrid);
+            this.BookingPricing.Location = new System.Drawing.Point(655, 70);
+            this.BookingPricing.Name = "BookingPricing";
+            this.BookingPricing.Size = new System.Drawing.Size(691, 539);
+            this.BookingPricing.TabIndex = 0;
+            this.BookingPricing.TabStop = false;
+            this.BookingPricing.Text = "Pricing";
+            // 
+            // PricingGrid
+            // 
+            this.PricingGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PricingGrid.Location = new System.Drawing.Point(6, 39);
+            this.PricingGrid.Name = "PricingGrid";
+            this.PricingGrid.RowHeadersWidth = 72;
+            this.PricingGrid.RowTemplate.Height = 31;
+            this.PricingGrid.Size = new System.Drawing.Size(679, 494);
+            this.PricingGrid.TabIndex = 0;
+            // 
+            // PromoCodeOutput
+            // 
+            this.PromoCodeOutput.Location = new System.Drawing.Point(280, 421);
+            this.PromoCodeOutput.Name = "PromoCodeOutput";
+            this.PromoCodeOutput.Size = new System.Drawing.Size(188, 29);
+            this.PromoCodeOutput.TabIndex = 17;
+            // 
+            // PromoCodeInput
+            // 
+            this.PromoCodeInput.Location = new System.Drawing.Point(48, 421);
+            this.PromoCodeInput.Name = "PromoCodeInput";
+            this.PromoCodeInput.Size = new System.Drawing.Size(196, 29);
+            this.PromoCodeInput.TabIndex = 16;
+            // 
+            // PromoCodeApplyDiscount
+            // 
+            this.PromoCodeApplyDiscount.Location = new System.Drawing.Point(48, 498);
+            this.PromoCodeApplyDiscount.Margin = new System.Windows.Forms.Padding(6);
+            this.PromoCodeApplyDiscount.Name = "PromoCodeApplyDiscount";
+            this.PromoCodeApplyDiscount.Size = new System.Drawing.Size(431, 48);
+            this.PromoCodeApplyDiscount.TabIndex = 15;
+            this.PromoCodeApplyDiscount.Text = "Add Discount";
+            this.PromoCodeApplyDiscount.UseVisualStyleBackColor = true;
+            this.PromoCodeApplyDiscount.Click += new System.EventHandler(this.PromoCodeApplyDiscount_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(46, 367);
+            this.label16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(141, 25);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Add Promotion";
+            // 
             // guestBindingSource
             // 
             this.guestBindingSource.DataSource = typeof(FinalHotelReservation.Data.Guest);
@@ -1075,6 +1079,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            this.Pricing.ResumeLayout(false);
+            this.Pricing.PerformLayout();
+            this.BookingPricing.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PricingGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guestBindingSource1)).EndInit();
             this.ResumeLayout(false);
@@ -1152,23 +1160,23 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button SearchAvailableRoomsBtn;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DataGridView GuestSearchResultsDataGridView;
         private System.Windows.Forms.Button createNewBooking;
         private System.Windows.Forms.TextBox lastNameTextBox;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button PromoCodeApplyDiscount;
         private System.Windows.Forms.TextBox checkInPhoneTextBox;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox SelectedRoomOnBooking;
         private System.Windows.Forms.DateTimePicker CheckOutPicker;
         private System.Windows.Forms.DateTimePicker CheckinDatePicker;
-        private System.Windows.Forms.TextBox PromoCodeInput;
+        private System.Windows.Forms.TabPage Pricing;
+        private System.Windows.Forms.GroupBox BookingPricing;
+        private System.Windows.Forms.DataGridView PricingGrid;
         private System.Windows.Forms.TextBox PromoCodeOutput;
+        private System.Windows.Forms.TextBox PromoCodeInput;
+        private System.Windows.Forms.Button PromoCodeApplyDiscount;
+        private System.Windows.Forms.Label label16;
     }
 }
 
