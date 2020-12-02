@@ -675,13 +675,16 @@ namespace FinalHotelReservation
             var con = Open();
             try
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date) VALUES (@userID, @roomID, @numAdults, @numChildren, @checkInDate, @checkOutDate)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO booking (user_id, room_id, num_adults, num_children, check_in_date, check_out_date, is_checkedin, is_checkedout) VALUES (@userID, @roomID, @numAdults, @numChildren, @checkInDate, @checkOutDate, @is_checkedin, @is_checkedout)", con);
                 cmd.Parameters.AddWithValue("@userID", userID);
                 cmd.Parameters.AddWithValue("@roomID", roomID);
                 cmd.Parameters.AddWithValue("@numAdults", numAdults);
                 cmd.Parameters.AddWithValue("@numChildren", numChildren);
                 cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
                 cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+                cmd.Parameters.AddWithValue("@is_checkedin", 0);
+                cmd.Parameters.AddWithValue("@is_checkedout", 0);
+
                 cmd.ExecuteNonQuery();
                 return "Booking created successfully.";
             }

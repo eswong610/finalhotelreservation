@@ -449,8 +449,11 @@ namespace FinalHotelReservation
             {
                 string checkin = CheckinDatePicker.Value.ToString("yyyyMMdd");
                 string checkout = CheckOutPicker.Value.ToString("yyyyMMdd");
+                
                 if (checkin != checkout)
                 {
+                    PricingCheckin.Value = CheckinDatePicker.Value;
+                    PricingCheckout.Value = CheckOutPicker.Value;
                     MenuNavigate.SelectTab(2);
                 } else
                 {
