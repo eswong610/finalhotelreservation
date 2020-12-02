@@ -451,9 +451,12 @@ namespace FinalHotelReservation
                 int roomID = Int32.Parse(RoomIDBox.Text);
                 string checkInDate = PricingCheckin.Value.ToString("yyyyMMdd");
                 string checkOutDate = PricingCheckout.Value.ToString("yyyyMMdd");
-                int numAdditionalAdults = Int32.Parse(NumAdditionalAdults.Text);
-                int numAdditionalChildren = Int32.Parse(NumAdditionalChildren.Text);
+                int numAdditionalAdults = NumAdditionalAdults.Text != "" ? Int32.Parse(NumAdditionalAdults.Text) : 0;
+                int numAdditionalChildren = NumAdditionalChildren.Text != "" ? Int32.Parse(NumAdditionalChildren.Text) : 0;
                 int discountPercentage = Int32.Parse(PromoDiscountPercentage.Text);
+
+                Console.WriteLine(numAdditionalAdults);
+
 
                 int totalGuests = 1 + numAdditionalAdults + numAdditionalChildren;
                 int roomOccupancy = 1;
